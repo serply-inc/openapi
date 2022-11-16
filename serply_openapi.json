@@ -10172,91 +10172,6 @@
         }
       ]
     },
-    "/v1/crawl/{query}": {
-      "get": {
-        "summary": "Crawl",
-        "description": "Perform Google Search\n\n Parameters\n----------\nquery : the string query to perform search. supports advance queries. Check out https://moz.com/blog/the-ultimate-guide-to-the-google-search-parameters guide for formating\n\nReturns\n-------\njson: a the html source of the results page",
-        "operationId": "Crawl",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "results": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "total": {
-                      "$ref": "#/components/schemas/ResultTotalScheme"
-                    },
-                    "answer": {
-                      "$ref": "#/components/schemas/ResultAnswerScheme"
-                    }
-                  }
-                },
-                "examples": {
-                  "crawlQueryGoogleSearchApi": {
-                    "value": {
-                      "results": [
-                        "<!doctype html><html itemscope=\"\" itemtype=\"http://schema.org/SearchResultsPage\" lang=\"en\"><head> ... </body></html>"
-                      ],
-                      "total": null,
-                      "answer": null
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Rate limit exceeded"
-          }
-        },
-        "tags": [
-          "v1"
-        ]
-      },
-      "parameters": [
-        {
-          "required": true,
-          "schema": {
-            "title": "Query",
-            "type": "string"
-          },
-          "name": "query",
-          "in": "path",
-          "examples": {
-            "regularKeywordSearch": {
-              "value": "q=google+search+api"
-            }
-          }
-        },
-        {
-          "$ref": "#/components/parameters/XUserAgent"
-        },
-        {
-          "$ref": "#/components/parameters/XProxyLocation"
-        }
-      ]
-    },
     "/v1/serp": {
       "post": {
         "summary": "SERP",
@@ -10359,6 +10274,943 @@
           "v1"
         ]
       }
+    },
+    "/v1/crawl/{query}": {
+      "get": {
+        "summary": "Crawl",
+        "description": "Perform Google Search\n\n Parameters\n----------\nquery : the string query to perform search. supports advance queries. Check out https://moz.com/blog/the-ultimate-guide-to-the-google-search-parameters guide for formating\n\nReturns\n-------\njson: a the html source of the results page",
+        "operationId": "Crawl",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "total": {
+                      "$ref": "#/components/schemas/ResultTotalScheme"
+                    },
+                    "answer": {
+                      "$ref": "#/components/schemas/ResultAnswerScheme"
+                    }
+                  }
+                },
+                "examples": {
+                  "crawlQueryGoogleSearchApi": {
+                    "value": {
+                      "results": [
+                        "<!doctype html><html itemscope=\"\" itemtype=\"http://schema.org/SearchResultsPage\" lang=\"en\"><head> ... </body></html>"
+                      ],
+                      "total": null,
+                      "answer": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        },
+        "tags": [
+          "v1"
+        ]
+      },
+      "parameters": [
+        {
+          "required": true,
+          "schema": {
+            "title": "Query",
+            "type": "string"
+          },
+          "name": "query",
+          "in": "path",
+          "examples": {
+            "regularKeywordSearch": {
+              "value": "q=google+search+api"
+            }
+          }
+        },
+        {
+          "$ref": "#/components/parameters/XUserAgent"
+        },
+        {
+          "$ref": "#/components/parameters/XProxyLocation"
+        }
+      ]
+    },
+    "/v1/product/search/{query}": {
+      "get": {
+        "summary": "Product",
+        "description": "Perform Amazon Product Search\n\n Parameters\n----------\nquery : the string query to perform search\n\nReturns\n-------\njson: a the html source of the results page",
+        "operationId": "Search Amazon",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "link": {
+                            "type": "string"
+                          },
+                          "asin": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": [
+                              "integer",
+                              "number"
+                            ]
+                          },
+                          "real_position": {
+                            "type": "integer"
+                          },
+                          "img_url": {
+                            "type": "string"
+                          },
+                          "rating_stars": {
+                            "type": "string"
+                          },
+                          "review_count": {
+                            "type": "integer"
+                          },
+                          "extras": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "bestseller": {
+                            "type": "boolean"
+                          },
+                          "prime": {
+                            "type": "boolean"
+                          },
+                          "is_sponsor": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    "ads": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {}
+                      }
+                    },
+                    "ts": {
+                      "type": "number"
+                    },
+                    "device_type": {
+                      "type": "null"
+                    }
+                  },
+                  "x-examples": {
+                    "example-1": {
+                      "products": [
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-13-Pro-Sierra/dp/B09LPN7C8Z/ref=sr_1_2?keywords=iphone+14&qid=1668626152&sr=8-2",
+                          "asin": "B09LPN7C8Z",
+                          "title": "Apple iPhone 13 Pro, 256GB, Sierra Blue - Unlocked (Renewed)",
+                          "price": 914.97,
+                          "real_position": 3,
+                          "img_url": "https://m.media-amazon.com/images/I/51UuPZLMaCL._AC_UY218_.jpg",
+                          "rating_stars": "4.3 out of 5 stars",
+                          "review_count": 308,
+                          "extras": [
+                            "Get it as soon as Fri, Nov 18",
+                            "FREE Shipping",
+                            "Only 10 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-13-128GB-Blue/dp/B09LNX6KQS/ref=sr_1_5?keywords=iphone+14&qid=1668626152&sr=8-5",
+                          "asin": "B09LNX6KQS",
+                          "title": "Apple iPhone 13, 128GB, Blue - Unlocked (Renewed)",
+                          "price": 656,
+                          "real_position": 8,
+                          "img_url": "https://m.media-amazon.com/images/I/71H8ipbuxoL._AC_UY218_.jpg",
+                          "rating_stars": "4.5 out of 5 stars",
+                          "review_count": 737,
+                          "extras": [
+                            "Get it as soon as Mon, Nov 21",
+                            "FREE Shipping",
+                            "Only 10 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/iPhone-13-Pro-128GB-Graphite/dp/B0BGYCPQY7/ref=sr_1_6?keywords=iphone+14&qid=1668626152&sr=8-6",
+                          "asin": "B0BGYCPQY7",
+                          "title": "iPhone 13 Pro, 128GB, Graphite - Unlocked (Renewed Premium)",
+                          "price": 849,
+                          "real_position": 9,
+                          "img_url": "https://m.media-amazon.com/images/I/61eDXs9QFNL._AC_UY218_.jpg",
+                          "rating_stars": "3.5 out of 5 stars",
+                          "review_count": 2,
+                          "extras": [
+                            "Get it as soon as Mon, Nov 21",
+                            "FREE Shipping by Amazon"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-128GB-Pacific-Blue/dp/B08PMYLKVF/ref=sr_1_7?keywords=iphone+14&qid=1668626152&sr=8-7",
+                          "asin": "B08PMYLKVF",
+                          "title": "Apple iPhone 12 Pro, 128GB, Pacific Blue - Fully Unlocked (Renewed)",
+                          "price": 539,
+                          "real_position": 10,
+                          "img_url": "https://m.media-amazon.com/images/I/71z4b3G3GAL._AC_UY218_.jpg",
+                          "rating_stars": "4.3 out of 5 stars",
+                          "review_count": 1706,
+                          "extras": [
+                            "Get it Mon, Nov 21 - Tue, Nov 22",
+                            "FREE Shipping"
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-13-Pro-Alpine/dp/B0B5FLX9WS/ref=sr_1_8?keywords=iphone+14&qid=1668626152&sr=8-8",
+                          "asin": "B0B5FLX9WS",
+                          "title": "Apple iPhone 13 Pro, 128GB, Alpine Green - Unlocked (Renewed)",
+                          "price": 863.88,
+                          "real_position": 11,
+                          "img_url": "https://m.media-amazon.com/images/I/61AwGDDZd3L._AC_UY218_.jpg",
+                          "rating_stars": "4.2 out of 5 stars",
+                          "review_count": 28,
+                          "extras": [
+                            "Get it as soon as Sat, Nov 19",
+                            "FREE Shipping",
+                            "Only 3 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/SAMSUNG-Unlocked-Smartphone-Intuitive-Warranty/dp/B097CMVWN9/ref=sr_1_10?keywords=iphone+14&qid=1668626152&sr=8-10",
+                          "asin": "B097CMVWN9",
+                          "title": "SAMSUNG Galaxy Z Flip 3 5G Factory Unlocked Android Cell Phone US Version Smartphone Flex Mode Intuitive Camera Compact 128GB Storage US Warranty, Green\"",
+                          "price": 797.98,
+                          "real_position": 13,
+                          "img_url": "https://m.media-amazon.com/images/I/51F+5XOSpHL._AC_UY218_.jpg",
+                          "rating_stars": "4.3 out of 5 stars",
+                          "review_count": 266,
+                          "extras": [
+                            "Get it as soon as Sat, Nov 19",
+                            "Only 11 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-13-Mini-128GB/dp/B09LKXHWCF/ref=sr_1_11?keywords=iphone+14&qid=1668626152&sr=8-11",
+                          "asin": "B09LKXHWCF",
+                          "title": "Apple iPhone 13 Mini, 128GB, Blue - Unlocked (Renewed)",
+                          "price": 604.97,
+                          "real_position": 14,
+                          "img_url": "https://m.media-amazon.com/images/I/51ysOQMyoGL._AC_UY218_.jpg",
+                          "rating_stars": "4.6 out of 5 stars",
+                          "review_count": 628,
+                          "extras": [
+                            "Get it as soon as Fri, Nov 18",
+                            "FREE Shipping",
+                            "Only 11 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-Pro-512GB-Gold/dp/B07ZQSJRGL/ref=sr_1_12?keywords=iphone+14&qid=1668626152&sr=8-12",
+                          "asin": "B07ZQSJRGL",
+                          "title": "Apple iPhone 11 Pro, US Version, 512GB, Gold - Unlocked (Renewed)",
+                          "price": 565.3,
+                          "real_position": 15,
+                          "img_url": "https://m.media-amazon.com/images/I/51cUdVn8N1L._AC_UY218_.jpg",
+                          "rating_stars": "4.3 out of 5 stars",
+                          "review_count": 14286,
+                          "extras": [
+                            "Get it as soon as Mon, Nov 21",
+                            "FREE Shipping",
+                            "Only 5 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-Sierra-Carrier-Subscription/dp/B09G9BPWNP/ref=sr_1_13?keywords=iphone+14&qid=1668626152&sr=8-13",
+                          "asin": "B09G9BPWNP",
+                          "title": "Apple iPhone 13 Pro (128GB, Sierra Blue) [Locked] + Carrier Subscription",
+                          "price": 899.99,
+                          "real_position": 16,
+                          "img_url": "https://m.media-amazon.com/images/I/61jLiCovxVL._AC_UY218_.jpg",
+                          "rating_stars": "4.0 out of 5 stars",
+                          "review_count": 25,
+                          "extras": [
+                            "Get it as soon as Mon, Nov 21",
+                            "FREE Shipping by Amazon"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-11-64GB-Red/dp/B07ZPKBL9V/ref=sr_1_14?keywords=iphone+14&qid=1668626152&sr=8-14",
+                          "asin": "B07ZPKBL9V",
+                          "title": "Apple iPhone 11, 64GB, Red - Unlocked (Renewed)",
+                          "price": 315,
+                          "real_position": 17,
+                          "img_url": "https://m.media-amazon.com/images/I/61je8NVr9WL._AC_UY218_.jpg",
+                          "rating_stars": "4.4 out of 5 stars",
+                          "review_count": 29784,
+                          "extras": [
+                            "Get it Mon, Nov 21 - Tue, Nov 22",
+                            "FREE Shipping"
+                          ],
+                          "bestseller": true,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-64GB-Midnight-Green/dp/B07ZZGN4ND/ref=sr_1_15?keywords=iphone+14&qid=1668626152&sr=8-15",
+                          "asin": "B07ZZGN4ND",
+                          "title": "Apple iPhone 11 Pro Max (64GB, Midnight Green) - AT&T/T-Mobile Unlocked (Renewed)",
+                          "price": 549,
+                          "real_position": 18,
+                          "img_url": "https://m.media-amazon.com/images/I/81ZYM5wSWOL._AC_UY218_.jpg",
+                          "rating_stars": "4.1 out of 5 stars",
+                          "review_count": 18,
+                          "extras": [
+                            "Get it as soon as Sat, Nov 19",
+                            "FREE Shipping",
+                            "Only 1 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        }
+                      ],
+                      "ads": [],
+                      "ts": 2.0670101642608643,
+                      "device_type": null
+                    }
+                  }
+                },
+                "examples": {
+                  "searchProductiPhone14": {
+                    "value": {
+                      "products": [
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-13-Pro-Sierra/dp/B09LPN7C8Z/ref=sr_1_2?keywords=iphone+14&qid=1668626152&sr=8-2",
+                          "asin": "B09LPN7C8Z",
+                          "title": "Apple iPhone 13 Pro, 256GB, Sierra Blue - Unlocked (Renewed)",
+                          "price": 914.97,
+                          "real_position": 3,
+                          "img_url": "https://m.media-amazon.com/images/I/51UuPZLMaCL._AC_UY218_.jpg",
+                          "rating_stars": "4.3 out of 5 stars",
+                          "review_count": 308,
+                          "extras": [
+                            "Get it as soon as Fri, Nov 18",
+                            "FREE Shipping",
+                            "Only 10 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-13-128GB-Blue/dp/B09LNX6KQS/ref=sr_1_5?keywords=iphone+14&qid=1668626152&sr=8-5",
+                          "asin": "B09LNX6KQS",
+                          "title": "Apple iPhone 13, 128GB, Blue - Unlocked (Renewed)",
+                          "price": 656,
+                          "real_position": 8,
+                          "img_url": "https://m.media-amazon.com/images/I/71H8ipbuxoL._AC_UY218_.jpg",
+                          "rating_stars": "4.5 out of 5 stars",
+                          "review_count": 737,
+                          "extras": [
+                            "Get it as soon as Mon, Nov 21",
+                            "FREE Shipping",
+                            "Only 10 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/iPhone-13-Pro-128GB-Graphite/dp/B0BGYCPQY7/ref=sr_1_6?keywords=iphone+14&qid=1668626152&sr=8-6",
+                          "asin": "B0BGYCPQY7",
+                          "title": "iPhone 13 Pro, 128GB, Graphite - Unlocked (Renewed Premium)",
+                          "price": 849,
+                          "real_position": 9,
+                          "img_url": "https://m.media-amazon.com/images/I/61eDXs9QFNL._AC_UY218_.jpg",
+                          "rating_stars": "3.5 out of 5 stars",
+                          "review_count": 2,
+                          "extras": [
+                            "Get it as soon as Mon, Nov 21",
+                            "FREE Shipping by Amazon"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-128GB-Pacific-Blue/dp/B08PMYLKVF/ref=sr_1_7?keywords=iphone+14&qid=1668626152&sr=8-7",
+                          "asin": "B08PMYLKVF",
+                          "title": "Apple iPhone 12 Pro, 128GB, Pacific Blue - Fully Unlocked (Renewed)",
+                          "price": 539,
+                          "real_position": 10,
+                          "img_url": "https://m.media-amazon.com/images/I/71z4b3G3GAL._AC_UY218_.jpg",
+                          "rating_stars": "4.3 out of 5 stars",
+                          "review_count": 1706,
+                          "extras": [
+                            "Get it Mon, Nov 21 - Tue, Nov 22",
+                            "FREE Shipping"
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-13-Pro-Alpine/dp/B0B5FLX9WS/ref=sr_1_8?keywords=iphone+14&qid=1668626152&sr=8-8",
+                          "asin": "B0B5FLX9WS",
+                          "title": "Apple iPhone 13 Pro, 128GB, Alpine Green - Unlocked (Renewed)",
+                          "price": 863.88,
+                          "real_position": 11,
+                          "img_url": "https://m.media-amazon.com/images/I/61AwGDDZd3L._AC_UY218_.jpg",
+                          "rating_stars": "4.2 out of 5 stars",
+                          "review_count": 28,
+                          "extras": [
+                            "Get it as soon as Sat, Nov 19",
+                            "FREE Shipping",
+                            "Only 3 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/SAMSUNG-Unlocked-Smartphone-Intuitive-Warranty/dp/B097CMVWN9/ref=sr_1_10?keywords=iphone+14&qid=1668626152&sr=8-10",
+                          "asin": "B097CMVWN9",
+                          "title": "SAMSUNG Galaxy Z Flip 3 5G Factory Unlocked Android Cell Phone US Version Smartphone Flex Mode Intuitive Camera Compact 128GB Storage US Warranty, Green\"",
+                          "price": 797.98,
+                          "real_position": 13,
+                          "img_url": "https://m.media-amazon.com/images/I/51F+5XOSpHL._AC_UY218_.jpg",
+                          "rating_stars": "4.3 out of 5 stars",
+                          "review_count": 266,
+                          "extras": [
+                            "Get it as soon as Sat, Nov 19",
+                            "Only 11 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-13-Mini-128GB/dp/B09LKXHWCF/ref=sr_1_11?keywords=iphone+14&qid=1668626152&sr=8-11",
+                          "asin": "B09LKXHWCF",
+                          "title": "Apple iPhone 13 Mini, 128GB, Blue - Unlocked (Renewed)",
+                          "price": 604.97,
+                          "real_position": 14,
+                          "img_url": "https://m.media-amazon.com/images/I/51ysOQMyoGL._AC_UY218_.jpg",
+                          "rating_stars": "4.6 out of 5 stars",
+                          "review_count": 628,
+                          "extras": [
+                            "Get it as soon as Fri, Nov 18",
+                            "FREE Shipping",
+                            "Only 11 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-Pro-512GB-Gold/dp/B07ZQSJRGL/ref=sr_1_12?keywords=iphone+14&qid=1668626152&sr=8-12",
+                          "asin": "B07ZQSJRGL",
+                          "title": "Apple iPhone 11 Pro, US Version, 512GB, Gold - Unlocked (Renewed)",
+                          "price": 565.3,
+                          "real_position": 15,
+                          "img_url": "https://m.media-amazon.com/images/I/51cUdVn8N1L._AC_UY218_.jpg",
+                          "rating_stars": "4.3 out of 5 stars",
+                          "review_count": 14286,
+                          "extras": [
+                            "Get it as soon as Mon, Nov 21",
+                            "FREE Shipping",
+                            "Only 5 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-Sierra-Carrier-Subscription/dp/B09G9BPWNP/ref=sr_1_13?keywords=iphone+14&qid=1668626152&sr=8-13",
+                          "asin": "B09G9BPWNP",
+                          "title": "Apple iPhone 13 Pro (128GB, Sierra Blue) [Locked] + Carrier Subscription",
+                          "price": 899.99,
+                          "real_position": 16,
+                          "img_url": "https://m.media-amazon.com/images/I/61jLiCovxVL._AC_UY218_.jpg",
+                          "rating_stars": "4.0 out of 5 stars",
+                          "review_count": 25,
+                          "extras": [
+                            "Get it as soon as Mon, Nov 21",
+                            "FREE Shipping by Amazon"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-11-64GB-Red/dp/B07ZPKBL9V/ref=sr_1_14?keywords=iphone+14&qid=1668626152&sr=8-14",
+                          "asin": "B07ZPKBL9V",
+                          "title": "Apple iPhone 11, 64GB, Red - Unlocked (Renewed)",
+                          "price": 315,
+                          "real_position": 17,
+                          "img_url": "https://m.media-amazon.com/images/I/61je8NVr9WL._AC_UY218_.jpg",
+                          "rating_stars": "4.4 out of 5 stars",
+                          "review_count": 29784,
+                          "extras": [
+                            "Get it Mon, Nov 21 - Tue, Nov 22",
+                            "FREE Shipping"
+                          ],
+                          "bestseller": true,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-iPhone-64GB-Midnight-Green/dp/B07ZZGN4ND/ref=sr_1_15?keywords=iphone+14&qid=1668626152&sr=8-15",
+                          "asin": "B07ZZGN4ND",
+                          "title": "Apple iPhone 11 Pro Max (64GB, Midnight Green) - AT&T/T-Mobile Unlocked (Renewed)",
+                          "price": 549,
+                          "real_position": 18,
+                          "img_url": "https://m.media-amazon.com/images/I/81ZYM5wSWOL._AC_UY218_.jpg",
+                          "rating_stars": "4.1 out of 5 stars",
+                          "review_count": 18,
+                          "extras": [
+                            "Get it as soon as Sat, Nov 19",
+                            "FREE Shipping",
+                            "Only 1 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        }
+                      ],
+                      "ads": [],
+                      "ts": 2.0670101642608643,
+                      "device_type": null
+                    }
+                  },
+                  "searchProductLaptops": {
+                    "value": {
+                      "products": [
+                        {
+                          "link": "https://www.amazon.com/Acer-i5-9300H-GeForce-Keyboard-AN515-54-5812/dp/B086KJBKDW/ref=sr_1_1?keywords=laptopss&qid=1668626332&sr=8-1",
+                          "asin": "B086KJBKDW",
+                          "title": "Acer Nitro 5 Gaming Laptop, 9th Gen Intel Core i5-9300H, NVIDIA GeForce GTX 1650, 15.6\" Full HD IPS Display, 8GB DDR4, 256GB NVMe SSD, Wi-Fi 6, Backlit Keyboard, Alexa Built-in, AN515-54-5812",
+                          "price": 699,
+                          "real_position": 2,
+                          "img_url": "https://m.media-amazon.com/images/I/81lWUzhyBlL._AC_UY218_.jpg",
+                          "rating_stars": "4.6 out of 5 stars",
+                          "review_count": 5190,
+                          "extras": [
+                            "FREE delivery Nov 22 - 25",
+                            "Or fastest delivery Tue, Nov 22",
+                            "Only 4 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Dell-Inspiron-3583-Laptop-Celeron/dp/B08HSNRFTX/ref=sr_1_2?keywords=laptopss&qid=1668626332&sr=8-2",
+                          "asin": "B08HSNRFTX",
+                          "title": "Dell Inspiron 3583 15” Laptop Intel Celeron – 128GB SSD – 4GB DDR4 – 1.6GHz - Intel UHD Graphics 610 - Windows 10 Home - Inspiron 15 3000 Series - New",
+                          "price": 329.99,
+                          "real_position": 3,
+                          "img_url": "https://m.media-amazon.com/images/I/7150w5ZxZ9L._AC_UY218_.jpg",
+                          "rating_stars": "4.3 out of 5 stars",
+                          "review_count": 1329,
+                          "extras": [
+                            "FREE delivery",
+                            "Only 13 left in stock - order soon."
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Lenovo-Ideapad-Touchscreen-i3-1005G1-Processor/dp/B08B6F1NNR/ref=sr_1_3?keywords=laptopss&qid=1668626332&sr=8-3",
+                          "asin": "B08B6F1NNR",
+                          "title": "2022 Newest Lenovo Ideapad 3 Laptop, 15.6\" HD Touchscreen, 11th Gen Intel Core i3-1115G4 Processor, 8GB DDR4 RAM, 256GB PCIe NVMe SSD, HDMI, Webcam, Wi-Fi 5, Bluetooth, Windows 11 Home, Almond",
+                          "price": 367.7,
+                          "real_position": 4,
+                          "img_url": "https://m.media-amazon.com/images/I/61QGMX0Qy6L._AC_UY218_.jpg",
+                          "rating_stars": "4.4 out of 5 stars",
+                          "review_count": 1161,
+                          "extras": [
+                            "FREE delivery Tue, Nov 22"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Acer-A515-46-R3UB-Display-Quad-Core-Processor/dp/B09HVC79PC/ref=sr_1_4?keywords=laptopss&qid=1668626332&sr=8-4",
+                          "asin": "B09HVC79PC",
+                          "title": "Acer Aspire 5 A515-46-R3UB | 15.6\" Full HD IPS Display | AMD Ryzen 3 3350U Quad-Core Mobile Processor | 4GB DDR4 | 128GB NVMe SSD | WiFi 6 | Backlit KB | FPR | Amazon Alexa | Windows 11 Home in S mode",
+                          "price": 369.9,
+                          "real_position": 6,
+                          "img_url": "https://m.media-amazon.com/images/I/7189iXimfWL._AC_UY218_.jpg",
+                          "rating_stars": "4.5 out of 5 stars",
+                          "review_count": 38701,
+                          "extras": [
+                            "FREE delivery Tue, Nov 22",
+                            "Or fastest delivery Mon, Nov 21"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Lenovo-IdeaPad-Essential-Computer-i5-15-6/dp/B09RNC69K8/ref=sr_1_5?keywords=laptopss&qid=1668626332&sr=8-5",
+                          "asin": "B09RNC69K8",
+                          "title": "Lenovo - 2022 - IdeaPad 3i - Essential Laptop Computer - Intel Core i5 12th Gen - 15.6\" FHD Display - 8GB Memory - 512GB Storage - Windows 11 Pro",
+                          "price": 529.99,
+                          "real_position": 7,
+                          "img_url": "https://m.media-amazon.com/images/I/71LsYu32caL._AC_UY218_.jpg",
+                          "rating_stars": "4.5 out of 5 stars",
+                          "review_count": 123,
+                          "extras": [
+                            "Lowest price in 30 days",
+                            "FREE delivery Tue, Nov 22",
+                            "Or fastest delivery Mon, Nov 21"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Acer-A515-56-36UT-Display-i3-1115G4-Processor/dp/B08VKT45K4/ref=sr_1_6?keywords=laptopss&qid=1668626332&sr=8-6",
+                          "asin": "B08VKT45K4",
+                          "title": "Acer Aspire 5 A515-56-36UT, 15.6\" Full HD Display, 11th Gen Intel Core i3-1115G4 Processor, 4GB DDR4, 128GB NVMe SSD, WiFi 6, Windows 11 Home (S Mode)",
+                          "price": 324,
+                          "real_position": 8,
+                          "img_url": "https://m.media-amazon.com/images/I/71233PTgAjL._AC_UY218_.jpg",
+                          "rating_stars": "4.3 out of 5 stars",
+                          "review_count": 3245,
+                          "extras": [
+                            "FREE delivery Tue, Nov 22"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Apple-MacBook-13-inch-256GB-Storage/dp/B08N5LNQCX/ref=sr_1_7?keywords=laptopss&qid=1668626332&sr=8-7",
+                          "asin": "B08N5LNQCX",
+                          "title": "2020 Apple MacBook Air Laptop: Apple M1 Chip, 13” Retina Display, 8GB RAM, 256GB SSD Storage, Backlit Keyboard, FaceTime HD Camera, Touch ID. Works with iPhone/iPad; Space Gray",
+                          "price": 799.99,
+                          "real_position": 9,
+                          "img_url": "https://m.media-amazon.com/images/I/71jG+e7roXL._AC_UY218_.jpg",
+                          "rating_stars": "4.8 out of 5 stars",
+                          "review_count": 13427,
+                          "extras": [
+                            "FREE delivery Tue, Nov 22",
+                            "Or fastest delivery Mon, Nov 21"
+                          ],
+                          "bestseller": true,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/ASUS-Chromebook-Spill-Resistant-Transparent-CX1400CNA-AS44FV/dp/B098KSXTFH/ref=sr_1_8?keywords=laptopss&qid=1668626332&sr=8-8",
+                          "asin": "B098KSXTFH",
+                          "title": "ASUS Chromebook CX1, 14\" Full HD NanoEdge Display, Intel Celeron N3350 Processor, 64GB eMMC, 4GB RAM, Chrome OS, Transparent Silver, CX1400CNA-AS44FV",
+                          "price": 223,
+                          "real_position": 10,
+                          "img_url": "https://m.media-amazon.com/images/I/71oYSGF0gVS._AC_UY218_.jpg",
+                          "rating_stars": "4.4 out of 5 stars",
+                          "review_count": 89,
+                          "extras": [
+                            "FREE delivery Tue, Nov 22",
+                            "Or fastest delivery Mon, Nov 21"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/VGKE-B15-Fingerprint-Processor-Keyboard/dp/B09X9QCBCR/ref=sr_1_9?keywords=laptopss&qid=1668626332&sr=8-9",
+                          "asin": "B09X9QCBCR",
+                          "title": "[Windows 11 Home] VGKE B15 [2022 Upgrade] Windows 11 Laptop with Fingerprint Reader, 15.6\" Full HD 1920*1080 IPS, Intel Celeron J4125 Processor, 12GB RAM LPDDR4, 256GB SSD, Backlit Keyboard",
+                          "price": 359.99,
+                          "real_position": 11,
+                          "img_url": "https://m.media-amazon.com/images/I/61MFntlabuL._AC_UY218_.jpg",
+                          "rating_stars": "4.1 out of 5 stars",
+                          "review_count": 100,
+                          "extras": [
+                            "FREE delivery Tue, Nov 22",
+                            "Or fastest delivery Mon, Nov 21"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Lenovo-2-1-Chromebook-Computer/dp/B09RNCN3YV/ref=sr_1_10?keywords=laptopss&qid=1668626332&sr=8-10",
+                          "asin": "B09RNCN3YV",
+                          "title": "Lenovo IdeaPad Flex 5i - 2022 - Chromebook 2-in-1 Laptop - Chrome OS - 13.3\" FHD Touch Display - 8GB Memory - 128GB Storage - Intel Core i3 11th Gen - Abyss Blue",
+                          "price": 299.99,
+                          "real_position": 12,
+                          "img_url": "https://m.media-amazon.com/images/I/81uDDuBAwpL._AC_UY218_.jpg",
+                          "rating_stars": "4.5 out of 5 stars",
+                          "review_count": 151,
+                          "extras": [
+                            "FREE delivery Tue, Nov 22",
+                            "Or fastest delivery Mon, Nov 21"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/ASUS-Chromebook-Spill-resistant-Transparent-CX1100CNA-AS42/dp/B08XTB1NNH/ref=sr_1_11?keywords=laptopss&qid=1668626332&sr=8-11",
+                          "asin": "B08XTB1NNH",
+                          "title": "ASUS Chromebook CX1, 11.6\" HD NanoEdge Display, Intel Celeron N3350 Processor, 32GB eMMC,  4GB RAM, Chrome OS, Transparent Silver, CX1100CNA-AS42",
+                          "price": 111.7,
+                          "real_position": 13,
+                          "img_url": "https://m.media-amazon.com/images/I/81eGCvMr3uS._AC_UY218_.jpg",
+                          "rating_stars": "4.2 out of 5 stars",
+                          "review_count": 1173,
+                          "extras": [
+                            "FREE delivery Tue, Nov 22",
+                            "Or fastest delivery Mon, Nov 21"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Flagship-HP-Chromebook-Anti-Glare-Processor/dp/B08PDTLK1Q/ref=sr_1_12?keywords=laptopss&qid=1668626332&sr=8-12",
+                          "asin": "B08PDTLK1Q",
+                          "title": "HP 2020 Flagship 14 Chromebook Laptop Computer 14-inch HD SVA Anti-Glare Display Intel Celeron N5000 Processor 4GB DDR4 64GB eMMC WiFi Webcam Chrome OS (Renewed)",
+                          "price": 138,
+                          "real_position": 14,
+                          "img_url": "https://m.media-amazon.com/images/I/817Y3zdhTXL._AC_UY218_.jpg",
+                          "rating_stars": "4.4 out of 5 stars",
+                          "review_count": 2203,
+                          "extras": [
+                            "FREE delivery Tue, Nov 22",
+                            "Or fastest delivery Mon, Nov 21"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/Newest-HP-Pentium-Bluetooth-Windows/dp/B08SF96WNN/ref=sr_1_13?keywords=laptopss&qid=1668626332&sr=8-13",
+                          "asin": "B08SF96WNN",
+                          "title": "Newest HP 14\" Touchscreen Laptop, Intel Dual-Core N4020,16GB RAM, 192GB Storage(64GB eMMC+128GB Micro SD),Webcam,1Yr Office w/ Accs. (Rose Gold)",
+                          "price": 418.69,
+                          "real_position": 15,
+                          "img_url": "https://m.media-amazon.com/images/I/71upv4UkR2L._AC_UY218_.jpg",
+                          "rating_stars": "4.3 out of 5 stars",
+                          "review_count": 198,
+                          "extras": [
+                            "FREE delivery Tue, Nov 22",
+                            "Or fastest delivery Mon, Nov 21"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/HP-Convertible-Generation-i5-1135G7-14-dw1025nr/dp/B09FDG7M6N/ref=sr_1_14?keywords=laptopss&qid=1668626332&sr=8-14",
+                          "asin": "B09FDG7M6N",
+                          "title": "HP Pavilion x360 Convertible 14-inch Laptop, 11th Generation Intel Core i5-1135G7 processor, Intel Iris Xe Graphics, 8GB RAM, 256 GB SSD, Windows 11 Home (14-dw1025nr, Natural silver)",
+                          "price": 524.9,
+                          "real_position": 16,
+                          "img_url": "https://m.media-amazon.com/images/I/81dRvbhb+wL._AC_UY218_.jpg",
+                          "rating_stars": "4.6 out of 5 stars",
+                          "review_count": 140,
+                          "extras": [
+                            "FREE delivery Nov 22 - 28",
+                            "Or fastest delivery Nov 21 - 23"
+                          ],
+                          "bestseller": false,
+                          "prime": false,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/HP-14-inch-Celeron-Personal-14-cb185nr/dp/B084SKWC89/ref=sr_1_15?keywords=laptopss&qid=1668626332&sr=8-15",
+                          "asin": "B084SKWC89",
+                          "title": "HP Stream 14-inch Laptop, Intel Celeron N4000, 4 GB RAM, 64 GB eMMC, Windows 10 Home in S Mode With Office 365 Personal For 1 Year (14-cb185nr, Royal Blue)",
+                          "price": 219.99,
+                          "real_position": 17,
+                          "img_url": "https://m.media-amazon.com/images/I/81RCOr3hJOL._AC_UY218_.jpg",
+                          "rating_stars": "4.4 out of 5 stars",
+                          "review_count": 1869,
+                          "extras": [
+                            "FREE delivery Tue, Nov 22"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        },
+                        {
+                          "link": "https://www.amazon.com/HP-14-Laptop-Dual-Core-Processor/dp/B09VRX9YVW/ref=sr_1_16?keywords=laptopss&qid=1668626332&sr=8-16",
+                          "asin": "B09VRX9YVW",
+                          "title": "Newest HP 14\" HD Laptop, Windows 11, Intel Celeron Dual-Core Processor Up to 2.60GHz, 4GB RAM, 64GB SSD, Webcam, Dale Pink(Renewed) (Dale Pink)",
+                          "price": 190.6,
+                          "real_position": 18,
+                          "img_url": "https://m.media-amazon.com/images/I/61MGsq1ZVaL._AC_UY218_.jpg",
+                          "rating_stars": "4.2 out of 5 stars",
+                          "review_count": 671,
+                          "extras": [
+                            "FREE delivery Tue, Nov 22",
+                            "Or fastest delivery Mon, Nov 21"
+                          ],
+                          "bestseller": false,
+                          "prime": true,
+                          "is_sponsor": false
+                        }
+                      ],
+                      "ads": [],
+                      "ts": 2.0498135089874268,
+                      "device_type": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "{\n\t\"products\": [\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-13-Pro-Sierra/dp/B09LPN7C8Z/ref=sr_1_2?keywords=iphone+14&qid=1668626152&sr=8-2\",\n\t\t\t\"asin\": \"B09LPN7C8Z\",\n\t\t\t\"title\": \"Apple iPhone 13 Pro, 256GB, Sierra Blue - Unlocked (Renewed)\",\n\t\t\t\"price\": 914.97,\n\t\t\t\"real_position\": 3,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/51UuPZLMaCL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.3 out of 5 stars\",\n\t\t\t\"review_count\": 308,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Fri, Nov 18\",\n\t\t\t\t\"FREE Shipping\",\n\t\t\t\t\"Only 10 left in stock - order soon.\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-13-128GB-Blue/dp/B09LNX6KQS/ref=sr_1_5?keywords=iphone+14&qid=1668626152&sr=8-5\",\n\t\t\t\"asin\": \"B09LNX6KQS\",\n\t\t\t\"title\": \"Apple iPhone 13, 128GB, Blue - Unlocked (Renewed)\",\n\t\t\t\"price\": 656.0,\n\t\t\t\"real_position\": 8,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/71H8ipbuxoL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.5 out of 5 stars\",\n\t\t\t\"review_count\": 737,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Mon, Nov 21\",\n\t\t\t\t\"FREE Shipping\",\n\t\t\t\t\"Only 10 left in stock - order soon.\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/iPhone-13-Pro-128GB-Graphite/dp/B0BGYCPQY7/ref=sr_1_6?keywords=iphone+14&qid=1668626152&sr=8-6\",\n\t\t\t\"asin\": \"B0BGYCPQY7\",\n\t\t\t\"title\": \"iPhone 13 Pro, 128GB, Graphite - Unlocked (Renewed Premium)\",\n\t\t\t\"price\": 849.0,\n\t\t\t\"real_position\": 9,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/61eDXs9QFNL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"3.5 out of 5 stars\",\n\t\t\t\"review_count\": 2,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Mon, Nov 21\",\n\t\t\t\t\"FREE Shipping by Amazon\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": true,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-128GB-Pacific-Blue/dp/B08PMYLKVF/ref=sr_1_7?keywords=iphone+14&qid=1668626152&sr=8-7\",\n\t\t\t\"asin\": \"B08PMYLKVF\",\n\t\t\t\"title\": \"Apple iPhone 12 Pro, 128GB, Pacific Blue - Fully Unlocked (Renewed)\",\n\t\t\t\"price\": 539.0,\n\t\t\t\"real_position\": 10,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/71z4b3G3GAL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.3 out of 5 stars\",\n\t\t\t\"review_count\": 1706,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it Mon, Nov 21 - Tue, Nov 22\",\n\t\t\t\t\"FREE Shipping\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-13-Pro-Alpine/dp/B0B5FLX9WS/ref=sr_1_8?keywords=iphone+14&qid=1668626152&sr=8-8\",\n\t\t\t\"asin\": \"B0B5FLX9WS\",\n\t\t\t\"title\": \"Apple iPhone 13 Pro, 128GB, Alpine Green - Unlocked (Renewed)\",\n\t\t\t\"price\": 863.88,\n\t\t\t\"real_position\": 11,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/61AwGDDZd3L._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.2 out of 5 stars\",\n\t\t\t\"review_count\": 28,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Sat, Nov 19\",\n\t\t\t\t\"FREE Shipping\",\n\t\t\t\t\"Only 3 left in stock - order soon.\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/SAMSUNG-Unlocked-Smartphone-Intuitive-Warranty/dp/B097CMVWN9/ref=sr_1_10?keywords=iphone+14&qid=1668626152&sr=8-10\",\n\t\t\t\"asin\": \"B097CMVWN9\",\n\t\t\t\"title\": \"SAMSUNG Galaxy Z Flip 3 5G Factory Unlocked Android Cell Phone US Version Smartphone Flex Mode Intuitive Camera Compact 128GB Storage US Warranty, Green\\\"\",\n\t\t\t\"price\": 797.98,\n\t\t\t\"real_position\": 13,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/51F+5XOSpHL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.3 out of 5 stars\",\n\t\t\t\"review_count\": 266,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Sat, Nov 19\",\n\t\t\t\t\"Only 11 left in stock - order soon.\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": true,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-13-Mini-128GB/dp/B09LKXHWCF/ref=sr_1_11?keywords=iphone+14&qid=1668626152&sr=8-11\",\n\t\t\t\"asin\": \"B09LKXHWCF\",\n\t\t\t\"title\": \"Apple iPhone 13 Mini, 128GB, Blue - Unlocked (Renewed)\",\n\t\t\t\"price\": 604.97,\n\t\t\t\"real_position\": 14,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/51ysOQMyoGL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.6 out of 5 stars\",\n\t\t\t\"review_count\": 628,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Fri, Nov 18\",\n\t\t\t\t\"FREE Shipping\",\n\t\t\t\t\"Only 11 left in stock - order soon.\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-Pro-512GB-Gold/dp/B07ZQSJRGL/ref=sr_1_12?keywords=iphone+14&qid=1668626152&sr=8-12\",\n\t\t\t\"asin\": \"B07ZQSJRGL\",\n\t\t\t\"title\": \"Apple iPhone 11 Pro, US Version, 512GB, Gold - Unlocked (Renewed)\",\n\t\t\t\"price\": 565.3,\n\t\t\t\"real_position\": 15,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/51cUdVn8N1L._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.3 out of 5 stars\",\n\t\t\t\"review_count\": 14286,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Mon, Nov 21\",\n\t\t\t\t\"FREE Shipping\",\n\t\t\t\t\"Only 5 left in stock - order soon.\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-Sierra-Carrier-Subscription/dp/B09G9BPWNP/ref=sr_1_13?keywords=iphone+14&qid=1668626152&sr=8-13\",\n\t\t\t\"asin\": \"B09G9BPWNP\",\n\t\t\t\"title\": \"Apple iPhone 13 Pro (128GB, Sierra Blue) [Locked] + Carrier Subscription\",\n\t\t\t\"price\": 899.99,\n\t\t\t\"real_position\": 16,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/61jLiCovxVL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.0 out of 5 stars\",\n\t\t\t\"review_count\": 25,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Mon, Nov 21\",\n\t\t\t\t\"FREE Shipping by Amazon\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": true,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-11-64GB-Red/dp/B07ZPKBL9V/ref=sr_1_14?keywords=iphone+14&qid=1668626152&sr=8-14\",\n\t\t\t\"asin\": \"B07ZPKBL9V\",\n\t\t\t\"title\": \"Apple iPhone 11, 64GB, Red - Unlocked (Renewed)\",\n\t\t\t\"price\": 315.0,\n\t\t\t\"real_position\": 17,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/61je8NVr9WL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.4 out of 5 stars\",\n\t\t\t\"review_count\": 29784,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it Mon, Nov 21 - Tue, Nov 22\",\n\t\t\t\t\"FREE Shipping\"\n\t\t\t],\n\t\t\t\"bestseller\": true,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-64GB-Midnight-Green/dp/B07ZZGN4ND/ref=sr_1_15?keywords=iphone+14&qid=1668626152&sr=8-15\",\n\t\t\t\"asin\": \"B07ZZGN4ND\",\n\t\t\t\"title\": \"Apple iPhone 11 Pro Max (64GB, Midnight Green) - AT&T/T-Mobile Unlocked (Renewed)\",\n\t\t\t\"price\": 549.0,\n\t\t\t\"real_position\": 18,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/81ZYM5wSWOL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.1 out of 5 stars\",\n\t\t\t\"review_count\": 18,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Sat, Nov 19\",\n\t\t\t\t\"FREE Shipping\",\n\t\t\t\t\"Only 1 left in stock - order soon.\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t}\n\t],\n\t\"ads\": [],\n\t\"ts\": 2.0670101642608643,\n\t\"device_type\": null\n}"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "": {
+            "description": "{\n\t\"products\": [\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-13-Pro-Sierra/dp/B09LPN7C8Z/ref=sr_1_2?keywords=iphone+14&qid=1668626152&sr=8-2\",\n\t\t\t\"asin\": \"B09LPN7C8Z\",\n\t\t\t\"title\": \"Apple iPhone 13 Pro, 256GB, Sierra Blue - Unlocked (Renewed)\",\n\t\t\t\"price\": 914.97,\n\t\t\t\"real_position\": 3,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/51UuPZLMaCL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.3 out of 5 stars\",\n\t\t\t\"review_count\": 308,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Fri, Nov 18\",\n\t\t\t\t\"FREE Shipping\",\n\t\t\t\t\"Only 10 left in stock - order soon.\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-13-128GB-Blue/dp/B09LNX6KQS/ref=sr_1_5?keywords=iphone+14&qid=1668626152&sr=8-5\",\n\t\t\t\"asin\": \"B09LNX6KQS\",\n\t\t\t\"title\": \"Apple iPhone 13, 128GB, Blue - Unlocked (Renewed)\",\n\t\t\t\"price\": 656.0,\n\t\t\t\"real_position\": 8,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/71H8ipbuxoL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.5 out of 5 stars\",\n\t\t\t\"review_count\": 737,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Mon, Nov 21\",\n\t\t\t\t\"FREE Shipping\",\n\t\t\t\t\"Only 10 left in stock - order soon.\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/iPhone-13-Pro-128GB-Graphite/dp/B0BGYCPQY7/ref=sr_1_6?keywords=iphone+14&qid=1668626152&sr=8-6\",\n\t\t\t\"asin\": \"B0BGYCPQY7\",\n\t\t\t\"title\": \"iPhone 13 Pro, 128GB, Graphite - Unlocked (Renewed Premium)\",\n\t\t\t\"price\": 849.0,\n\t\t\t\"real_position\": 9,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/61eDXs9QFNL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"3.5 out of 5 stars\",\n\t\t\t\"review_count\": 2,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Mon, Nov 21\",\n\t\t\t\t\"FREE Shipping by Amazon\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": true,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-128GB-Pacific-Blue/dp/B08PMYLKVF/ref=sr_1_7?keywords=iphone+14&qid=1668626152&sr=8-7\",\n\t\t\t\"asin\": \"B08PMYLKVF\",\n\t\t\t\"title\": \"Apple iPhone 12 Pro, 128GB, Pacific Blue - Fully Unlocked (Renewed)\",\n\t\t\t\"price\": 539.0,\n\t\t\t\"real_position\": 10,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/71z4b3G3GAL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.3 out of 5 stars\",\n\t\t\t\"review_count\": 1706,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it Mon, Nov 21 - Tue, Nov 22\",\n\t\t\t\t\"FREE Shipping\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-13-Pro-Alpine/dp/B0B5FLX9WS/ref=sr_1_8?keywords=iphone+14&qid=1668626152&sr=8-8\",\n\t\t\t\"asin\": \"B0B5FLX9WS\",\n\t\t\t\"title\": \"Apple iPhone 13 Pro, 128GB, Alpine Green - Unlocked (Renewed)\",\n\t\t\t\"price\": 863.88,\n\t\t\t\"real_position\": 11,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/61AwGDDZd3L._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.2 out of 5 stars\",\n\t\t\t\"review_count\": 28,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Sat, Nov 19\",\n\t\t\t\t\"FREE Shipping\",\n\t\t\t\t\"Only 3 left in stock - order soon.\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/SAMSUNG-Unlocked-Smartphone-Intuitive-Warranty/dp/B097CMVWN9/ref=sr_1_10?keywords=iphone+14&qid=1668626152&sr=8-10\",\n\t\t\t\"asin\": \"B097CMVWN9\",\n\t\t\t\"title\": \"SAMSUNG Galaxy Z Flip 3 5G Factory Unlocked Android Cell Phone US Version Smartphone Flex Mode Intuitive Camera Compact 128GB Storage US Warranty, Green\\\"\",\n\t\t\t\"price\": 797.98,\n\t\t\t\"real_position\": 13,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/51F+5XOSpHL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.3 out of 5 stars\",\n\t\t\t\"review_count\": 266,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Sat, Nov 19\",\n\t\t\t\t\"Only 11 left in stock - order soon.\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": true,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-13-Mini-128GB/dp/B09LKXHWCF/ref=sr_1_11?keywords=iphone+14&qid=1668626152&sr=8-11\",\n\t\t\t\"asin\": \"B09LKXHWCF\",\n\t\t\t\"title\": \"Apple iPhone 13 Mini, 128GB, Blue - Unlocked (Renewed)\",\n\t\t\t\"price\": 604.97,\n\t\t\t\"real_position\": 14,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/51ysOQMyoGL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.6 out of 5 stars\",\n\t\t\t\"review_count\": 628,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Fri, Nov 18\",\n\t\t\t\t\"FREE Shipping\",\n\t\t\t\t\"Only 11 left in stock - order soon.\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-Pro-512GB-Gold/dp/B07ZQSJRGL/ref=sr_1_12?keywords=iphone+14&qid=1668626152&sr=8-12\",\n\t\t\t\"asin\": \"B07ZQSJRGL\",\n\t\t\t\"title\": \"Apple iPhone 11 Pro, US Version, 512GB, Gold - Unlocked (Renewed)\",\n\t\t\t\"price\": 565.3,\n\t\t\t\"real_position\": 15,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/51cUdVn8N1L._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.3 out of 5 stars\",\n\t\t\t\"review_count\": 14286,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Mon, Nov 21\",\n\t\t\t\t\"FREE Shipping\",\n\t\t\t\t\"Only 5 left in stock - order soon.\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-Sierra-Carrier-Subscription/dp/B09G9BPWNP/ref=sr_1_13?keywords=iphone+14&qid=1668626152&sr=8-13\",\n\t\t\t\"asin\": \"B09G9BPWNP\",\n\t\t\t\"title\": \"Apple iPhone 13 Pro (128GB, Sierra Blue) [Locked] + Carrier Subscription\",\n\t\t\t\"price\": 899.99,\n\t\t\t\"real_position\": 16,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/61jLiCovxVL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.0 out of 5 stars\",\n\t\t\t\"review_count\": 25,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Mon, Nov 21\",\n\t\t\t\t\"FREE Shipping by Amazon\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": true,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-11-64GB-Red/dp/B07ZPKBL9V/ref=sr_1_14?keywords=iphone+14&qid=1668626152&sr=8-14\",\n\t\t\t\"asin\": \"B07ZPKBL9V\",\n\t\t\t\"title\": \"Apple iPhone 11, 64GB, Red - Unlocked (Renewed)\",\n\t\t\t\"price\": 315.0,\n\t\t\t\"real_position\": 17,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/61je8NVr9WL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.4 out of 5 stars\",\n\t\t\t\"review_count\": 29784,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it Mon, Nov 21 - Tue, Nov 22\",\n\t\t\t\t\"FREE Shipping\"\n\t\t\t],\n\t\t\t\"bestseller\": true,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t},\n\t\t{\n\t\t\t\"link\": \"https://www.amazon.com/Apple-iPhone-64GB-Midnight-Green/dp/B07ZZGN4ND/ref=sr_1_15?keywords=iphone+14&qid=1668626152&sr=8-15\",\n\t\t\t\"asin\": \"B07ZZGN4ND\",\n\t\t\t\"title\": \"Apple iPhone 11 Pro Max (64GB, Midnight Green) - AT&T/T-Mobile Unlocked (Renewed)\",\n\t\t\t\"price\": 549.0,\n\t\t\t\"real_position\": 18,\n\t\t\t\"img_url\": \"https://m.media-amazon.com/images/I/81ZYM5wSWOL._AC_UY218_.jpg\",\n\t\t\t\"rating_stars\": \"4.1 out of 5 stars\",\n\t\t\t\"review_count\": 18,\n\t\t\t\"extras\": [\n\t\t\t\t\"Get it as soon as Sat, Nov 19\",\n\t\t\t\t\"FREE Shipping\",\n\t\t\t\t\"Only 1 left in stock - order soon.\"\n\t\t\t],\n\t\t\t\"bestseller\": false,\n\t\t\t\"prime\": false,\n\t\t\t\"is_sponsor\": false\n\t\t}\n\t],\n\t\"ads\": [],\n\t\"ts\": 2.0670101642608643,\n\t\"device_type\": null\n}"
+          }
+        },
+        "tags": [
+          "v1",
+          "product"
+        ]
+      },
+      "parameters": [
+        {
+          "required": true,
+          "schema": {
+            "title": "Query",
+            "type": "string"
+          },
+          "name": "query",
+          "in": "path",
+          "examples": {
+            "regularKeywordSearch": {
+              "value": "q=google+search+api"
+            }
+          }
+        },
+        {
+          "name": "X-User-Agent",
+          "in": "header",
+          "required": false,
+          "schema": {
+            "title": "X-User-Agent",
+            "type": "string",
+            "enum": [
+              "desktop",
+              "mobile"
+            ]
+          },
+          "description": "Optional header to specify device type \"desktop\" or \"mobile\". Defaults to \"desktop\""
+        },
+        {
+          "name": "X-Proxy-Location",
+          "in": "header",
+          "required": false,
+          "schema": {
+            "title": "X-Proxy-Location",
+            "type": "string",
+            "enum": [
+              "EU",
+              "CA",
+              "US",
+              "IE",
+              "GB",
+              "FR",
+              "DE",
+              "SE",
+              "IN",
+              "JP",
+              "KR",
+              "SG",
+              "AU",
+              "BR"
+            ]
+          },
+          "description": "Specify the proxy location for the search.  Supported countries. 'US', 'CA', 'IE', 'GB', 'FR', 'DE', 'SE', 'IN', 'JP', 'KR', 'SG', 'AU', 'BR'"
+        }
+      ]
     }
   },
   "components": {
