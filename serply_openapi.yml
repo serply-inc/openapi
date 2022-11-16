@@ -7490,7 +7490,7 @@ paths:
                 summary: example of getting rapidapi SERP for keywords "google search api"
                 value:
                   query: q=google+search+api
-                  website: rapidapi.com
+                  website: serply.io
         required: true
       responses:
         '200':
