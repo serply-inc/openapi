@@ -17,6 +17,8 @@ info:
 
     # Docs
 
+    Serply API [Swagger Specs](https://github.com/serply-inc/openapi/blob/main/serply_openapi.json) can be found at our public [Github Repo](https://github.com/serply-inc). We also have [docs](https://docs.serply.io/api) where you can try out the API and get code examples for various languages such as CURL, JavaScript, Python, C#, and Java.
+
     # Example Code
 
     Check out our [Serply examples code](https://github.com/serply-inc/example_codes) for example code for calling the API with various languages.
