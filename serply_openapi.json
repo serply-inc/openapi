@@ -10509,13 +10509,10 @@
   "servers": [
     {
       "url": "https://api.serply.io/",
-      "description": "Testing alb"
+      "description": "Production Load Balancer"
     }
   ],
   "tags": [
-    {
-      "name": "status"
-    },
     {
       "name": "v1"
     }

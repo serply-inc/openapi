@@ -77,7 +77,7 @@ info:
 paths:
   '/v1/search/{query}':
     get:
-      summary: Search
+      summary: Search Google
       description: |-
         Perform Google Search
 
@@ -468,7 +468,7 @@ paths:
       - $ref: '#/components/parameters/XProxyLocation'
   '/v1/b/search/{query}':
     get:
-      summary: Search
+      summary: Search Bing
       description: |-
         Perform Bing Search
 
@@ -7698,7 +7698,6 @@ security:
   - ApiKeyAuth: []
 servers:
   - url: 'https://api.serply.io/'
-    description: Testing alb
+    description: Production Load Balancer
 tags:
-  - name: status
   - name: v1
