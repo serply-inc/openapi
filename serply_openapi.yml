@@ -75,35 +75,6 @@ info:
     url: 'https://serply.io/support'
   termsOfService: 'https://serply.io/terms'
 paths:
-  /v1/status:
-    get:
-      summary: Status
-      operationId: Status
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-              examples:
-                statusTrue:
-                  value:
-                    status: true
-                statusFalse:
-                  value:
-                    status: false
-        '404':
-          description: Not Found
-      description: It "status" == true then API is up
-      x-internal: false
-      parameters: []
-      tags:
-        - status
-    parameters: []
   '/v1/search/{query}':
     get:
       summary: Search
@@ -117,7 +88,7 @@ paths:
         Returns
         -------
         json: a list of results with the link, description, and title for each result
-      operationId: Search
+      operationId: Search Google
       responses:
         '200':
           description: Successful Response
@@ -495,6 +466,410 @@ paths:
             description: a more advance search with 100 results
       - $ref: '#/components/parameters/XUserAgent'
       - $ref: '#/components/parameters/XProxyLocation'
+  '/v1/b/search/{query}':
+    get:
+      summary: Search
+      description: |-
+        Perform Bing Search
+
+        Parameters
+        ----------
+        query : A url encoded query string, for reference checkout https://seosly.com/blog/bing-search-operators/
+
+        Returns
+        -------
+        json: a list of results with the link, description, and title for each result
+      operationId: Search Bing
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ads:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        displayUrl:
+                          type: string
+                        targetUrl:
+                          type: string
+                        content:
+                          type: string
+                        position:
+                          type: integer
+                        area:
+                          type: string
+                        realPosition:
+                          type: integer
+                  adsCount:
+                    type: integer
+                  shoppingAds:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        price:
+                          type: string
+                        originalPrice:
+                          type: 'null'
+                        advertiser:
+                          type: string
+                        targetUrl:
+                          type: string
+                        image:
+                          type: string
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        realPosition:
+                          type: integer
+                        link:
+                          type: string
+                  location:
+                    type: object
+                    properties:
+                      htmlLang:
+                        type: string
+                  ts:
+                    type: number
+                  device_type:
+                    type: 'null'
+                x-examples:
+                  example-1:
+                    ads:
+                      - title: amazon.in - Buy Mobiles at Amazon
+                        displayUrl: 'https://www.amazon.in/Electronics/Home'
+                        targetUrl: 'https://www.bing.com/aclk?ld=e8FOaJplA-TBpfaroy8ts5YzVUCUyhvA6w2BwZ3zE4vsR05AETpWJ1YPGZpEVXMirk3QVAUVfPK4ziS2JKZudsUM6EYPu8ckmUH_ipomfWneMFzPnj_1OE6qWiSwRjNXDn3EQUS2ujWRVVUCk3Fu_kf_a-EkTwURPPiw5sk6Ue_Cfn9BYkcYkLeeE3UAG1EmPXUq0e6g&u=aHR0cHMlM2ElMmYlMmZ3d3cuYW1hem9uLmluJTJmcyUyZiUzZmllJTNkVVRGOCUyNmtleXdvcmRzJTNkaXBob25lJTJiLSUyYjE0JTI2dGFnJTNkbXNuZGVza3N0ZGluLTIxJTI2aW5kZXglM2RhcHMlMjZodmFkaWQlM2Q3NTg2NjQ2NzI0NTcyNyUyNmh2cW10JTNkZSUyNmh2Ym10JTNkYmUlMjZodmRldiUzZGMlMjZyZWYlM2RwZF9zbF8zZWN6YzUwbDFvX2UlMjZ0YWclM2Rtc25kZXNrc3RkaW4tMjElMjZyZWYlM2RwZF9zbF8zZWN6YzUwbDFvX2UlMjZhZGdycGlkJTNkMTIxMzg2MTM0Mjk2NDMyNiUyNmh2YWRpZCUzZDc1ODY2NDY3MjQ1NzI3JTI2aHZuZXR3JTNkbyUyNmh2cW10JTNkZSUyNmh2Ym10JTNkYmUlMjZodmRldiUzZGMlMjZodmxvY2ludCUzZCUyNmh2bG9jcGh5JTNkMTU4NTI3JTI2aHZ0YXJnaWQlM2Rrd2QtNzU4NjY3MjI3MDY5MTQlM2Fsb2MtOTAlMjZoeWRhZGNyJTNk&rlid=a267c5b099ae1f7a3604a6c5b7d76534'
+                        content: 'Explore latest selection of Mobiles, Tablets, Cameras & More. Pay on Delivery.'
+                        position: 1
+                        area: top
+                        realPosition: 1
+                      - title: amazon.in - Buy Mobiles at Amazon
+                        displayUrl: 'https://www.amazon.in/Electronics/Home'
+                        targetUrl: 'https://www.bing.com/aclk?ld=e8FOaJplA-TBpfaroy8ts5YzVUCUyhvA6w2BwZ3zE4vsR05AETpWJ1YPGZpEVXMirk3QVAUVfPK4ziS2JKZudsUM6EYPu8ckmUH_ipomfWneMFzPnj_1OE6qWiSwRjNXDn3EQUS2ujWRVVUCk3Fu_kf_a-EkTwURPPiw5sk6Ue_Cfn9BYkcYkLeeE3UAG1EmPXUq0e6g&u=aHR0cHMlM2ElMmYlMmZ3d3cuYW1hem9uLmluJTJmcyUyZiUzZmllJTNkVVRGOCUyNmtleXdvcmRzJTNkaXBob25lJTJiLSUyYjE0JTI2dGFnJTNkbXNuZGVza3N0ZGluLTIxJTI2aW5kZXglM2RhcHMlMjZodmFkaWQlM2Q3NTg2NjQ2NzI0NTcyNyUyNmh2cW10JTNkZSUyNmh2Ym10JTNkYmUlMjZodmRldiUzZGMlMjZyZWYlM2RwZF9zbF8zZWN6YzUwbDFvX2UlMjZ0YWclM2Rtc25kZXNrc3RkaW4tMjElMjZyZWYlM2RwZF9zbF8zZWN6YzUwbDFvX2UlMjZhZGdycGlkJTNkMTIxMzg2MTM0Mjk2NDMyNiUyNmh2YWRpZCUzZDc1ODY2NDY3MjQ1NzI3JTI2aHZuZXR3JTNkbyUyNmh2cW10JTNkZSUyNmh2Ym10JTNkYmUlMjZodmRldiUzZGMlMjZodmxvY2ludCUzZCUyNmh2bG9jcGh5JTNkMTU4NTI3JTI2aHZ0YXJnaWQlM2Rrd2QtNzU4NjY3MjI3MDY5MTQlM2Fsb2MtOTAlMjZoeWRhZGNyJTNk&rlid=a267c5b099ae1f7a3604a6c5b7d76534'
+                        content: 'Explore latest selection of Mobiles, Tablets, Cameras & More. Pay on Delivery.'
+                        position: 2
+                        area: bottom
+                        realPosition: 11
+                    adsCount: 2
+                    shoppingAds:
+                      - title: 'Apple iPhone 13 (128 GB, …Green)'
+                        price: '₹ 66,990.00'
+                        originalPrice: null
+                        advertiser: Vijay Sales
+                        targetUrl: 'https://www.bing.com/aclk?ld=e8cIwnIRQB4-g-1SU-XBAc3jVUCUwFr_e2cllI4nA41MA8GH5RjB9ZkEnequmlyMuaPmTGHODyefd9V2hnE3hfqh0BV4kqemuEaG9KKAbuN4ZlFGpOJXlgqQE2fn9g0zbdN4pbYdDq_aT0lhYMrGLZYZ0B7TK3Ft7-F6kUBavj_m8UOjVKvhY6EFRVoWW3W-x-LXPXVw&u=aHR0cHMlM2ElMmYlMmZ3d3cudmlqYXlzYWxlcy5jb20lMmZhcHBsZS1pcGhvbmUtMTMtMTI4LWdiLWdyZWVuJTJmMTk0OTMlM2Ztc2Nsa2lkJTNkYThjZjdkYjNjZWNhMTkzMDA0ZDAxZWM2ZTBiMzRhMTUlMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY2FtcGFpZ24lM2RCaW5nJTI1MjBTdGFuZGFyZCUyNTIwU2hvcHBpbmclMjUyMFBMQSUyNTIwLSUyNTIwTWFoYXJhc2h0cmElMjZ1dG1fdGVybSUzZDQ1ODgyNjIwMjU3MzgyOTclMjZ1dG1fY29udGVudCUzZEFsbCUyNTIwUHJvZHVjdHMlMjUyMC0lMjUyME1haA&rlid=a8cf7db3ceca193004d01ec6e0b34a15'
+                        image: 'data:image/svg+xml;charset=utf8,%3Csvg xmlns=''http://www.w3.org/2000/svg'' width=''110'' height=''150''/%3E'
+                      - title: 'Apple iPhone 14 Pro Max …(1 TB, Space Black)'
+                        price: '₹ 1,89,900.00'
+                        originalPrice: null
+                        advertiser: Vijay Sales
+                        targetUrl: 'https://www.bing.com/aclk?ld=e8vwKKCDTJwrjxO6J_FyVZKjVUCUyDaVI3GU_cdwYygdX1vd8iBBofLJnJnnQuv6phjVdV-bKZXOzF9LhA80dsraDWCjbeHbFtLSf6gxtxZPwFTPb-ayJLLjLxDfq5zcmkpJk3lPFqflpJrVaJHML4Ws8gvBFX_ob151TNKE0vChcXpKV2SH4y2My-msG4kxDprTHzLg&u=aHR0cHMlM2ElMmYlMmZ3d3cudmlqYXlzYWxlcy5jb20lMmZhcHBsZS1pcGhvbmUtMTQtcHJvLW1heC0xLXRiLXNwYWNlLWJsYWNrJTJmMjIwNzIlM2Ztc2Nsa2lkJTNkZDgzZmQxYTczYTc3MWRiMjY4OWJiMmQyMTQwZTBjNDElMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY2FtcGFpZ24lM2RCaW5nJTI1MjBTdGFuZGFyZCUyNTIwU2hvcHBpbmclMjUyMFBMQSUyNTIwLSUyNTIwTWFoYXJhc2h0cmElMjZ1dG1fdGVybSUzZDQ1ODgyNjIwMjU3MzgyOTclMjZ1dG1fY29udGVudCUzZEFsbCUyNTIwUHJvZHVjdHMlMjUyMC0lMjUyME1haA&rlid=d83fd1a73a771db2689bb2d2140e0c41'
+                        image: 'data:image/svg+xml;charset=utf8,%3Csvg xmlns=''http://www.w3.org/2000/svg'' width=''120'' height=''150''/%3E'
+                      - title: 'Apple iPhone 14 Pro Max …(1 TB, Gold)'
+                        price: '₹ 1,89,900.00'
+                        originalPrice: null
+                        advertiser: Vijay Sales
+                        targetUrl: 'https://www.bing.com/aclk?ld=e8mzzBu-io4LcoX4GgYoGbazVUCUzHcRcP8oLN7lazWlP_eaRhPbU-qjaVDTxhI4m7KunRAY0TKHq37Ebp21wxgALNjvvjHb6mGXPj5ooLnHzjsV4tSL6456rVqyerJjOUykuXEglS4RUC0UraCnMi93AXd9lPgD2v5qKLHg2cOHj9sFT1K4YiQmSjTb8GzNhhQDiWCA&u=aHR0cHMlM2ElMmYlMmZ3d3cudmlqYXlzYWxlcy5jb20lMmZhcHBsZS1pcGhvbmUtMTQtcHJvLW1heC0xLXRiLWdvbGQlMmYyMjA4MyUzZm1zY2xraWQlM2QwNGQ1NjUyMDYzMGYxNzg5ODAzMTA2NTU0ZDc2MWJlYSUyNnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX21lZGl1bSUzZGNwYyUyNnV0bV9jYW1wYWlnbiUzZEJpbmclMjUyMFN0YW5kYXJkJTI1MjBTaG9wcGluZyUyNTIwUExBJTI1MjAtJTI1MjBNYWhhcmFzaHRyYSUyNnV0bV90ZXJtJTNkNDU4ODI2MjAyNTczODI5NyUyNnV0bV9jb250ZW50JTNkQWxsJTI1MjBQcm9kdWN0cyUyNTIwLSUyNTIwTWFo&rlid=04d56520630f1789803106554d761bea'
+                        image: 'data:image/svg+xml;charset=utf8,%3Csvg xmlns=''http://www.w3.org/2000/svg'' width=''120'' height=''150''/%3E'
+                      - title: 'Apple iPhone 12 (128 GB, …Purple)'
+                        price: '₹ 62,990.00'
+                        originalPrice: null
+                        advertiser: Vijay Sales
+                        targetUrl: 'https://www.bing.com/aclk?ld=e8KrsgU0eHzsK1tKOo62L42DVUCUzCuhV7aqiZWaNLjR7h5-Bg037AKQJ-Pfd0MvPEzdMCVvS20lvJf_waV3-xXNJ9xqHpiYJlFNhbx5kLC9yYzH0QbxpfheRar7_-IGhAFDirVFc8UkS-7Wj62bcbXCmXKUaLsEw35tjctsTvNkJFBETh1E5kj7b5pXkXzidXAuYT5A&u=aHR0cHMlM2ElMmYlMmZ3d3cudmlqYXlzYWxlcy5jb20lMmZhcHBsZS1pcGhvbmUtMTItMTI4LWdiLXB1cnBsZSUyZjE2NTE3JTNmbXNjbGtpZCUzZDBiZTBlOWIwOTZhYzE4YWJiMGJiOGFjNWI4ZDU4ZDE4JTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkQmluZyUyNTIwU3RhbmRhcmQlMjUyMFNob3BwaW5nJTI1MjBQTEElMjUyMC0lMjUyME1haGFyYXNodHJhJTI2dXRtX3Rlcm0lM2Q0NTg4MjYyMDI1NzM4Mjk3JTI2dXRtX2NvbnRlbnQlM2RBbGwlMjUyMFByb2R1Y3RzJTI1MjAtJTI1MjBNYWg&rlid=0be0e9b096ac18abb0bb8ac5b8d58d18'
+                        image: 'data:image/svg+xml;charset=utf8,%3Csvg xmlns=''http://www.w3.org/2000/svg'' width=''110'' height=''150''/%3E'
+                      - title: 'Apple iPhone 12 (128 GB, …Green)'
+                        price: '₹ 62,990.00'
+                        originalPrice: null
+                        advertiser: Vijay Sales
+                        targetUrl: 'https://www.bing.com/aclk?ld=e8KSJALaFxWUlefRA5kHYZ2zVUCUzeEfdmFRANhUz-DsoCZnRozDQTq4l2AESEH131c-cIKprZF_1k6sXP2IA9_nLbx1BSyNuHzCHnNXM3YJP9TK7CIfOSuUIATJfshG_9h-vsRZ4qPsBVuS2b_gnz0TfEdyo9ThRWekUt9eE0VenpOjVNCVD-W16POQXb6U9pr-DDdA&u=aHR0cHMlM2ElMmYlMmZ3d3cudmlqYXlzYWxlcy5jb20lMmZhcHBsZS1pcGhvbmUtMTItMTI4LWdiLWdyZWVuJTJmMTQ2ODUlM2Ztc2Nsa2lkJTNkNmFmMzNjNTgyZDViMWJkMGY3MDU1ZjJkMDMyMjBkNWMlMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY2FtcGFpZ24lM2RCaW5nJTI1MjBTdGFuZGFyZCUyNTIwU2hvcHBpbmclMjUyMFBMQSUyNTIwLSUyNTIwTWFoYXJhc2h0cmElMjZ1dG1fdGVybSUzZDQ1ODgyNjIwMjU3MzgyOTclMjZ1dG1fY29udGVudCUzZEFsbCUyNTIwUHJvZHVjdHMlMjUyMC0lMjUyME1haA&rlid=6af33c582d5b1bd0f7055f2d03220d5c'
+                        image: 'data:image/svg+xml;charset=utf8,%3Csvg xmlns=''http://www.w3.org/2000/svg'' width=''74'' height=''150''/%3E'
+                      - title: 'Apple iPhone 12 (128 GB, …Black)'
+                        price: '₹ 62,990.00'
+                        originalPrice: null
+                        advertiser: Vijay Sales
+                        targetUrl: 'https://www.bing.com/aclk?ld=e81V2BEBJlcNVW5YLn1ky3ejVUCUwY4PCEC5b3UbJaYM2XmXfP7WV4nQUnjHZ4tYCXi8sjvH2_EnliQYZ2yKHb7M1LAtWAqNoagR_NIcMjKlrHkEXQ8o_2ObaESYsxW5RoGdHPZ0n5w7WQSAZ5MIqJYd159D6k_1trp1ZJuKebg3EoN8bS2nW5QyOok3K-etsw8U_c4g&u=aHR0cHMlM2ElMmYlMmZ3d3cudmlqYXlzYWxlcy5jb20lMmZhcHBsZS1pcGhvbmUtMTItMTI4LWdiLWJsYWNrJTJmMTQ2ODElM2Ztc2Nsa2lkJTNkNDlhNzI1ZDJjNzUxMTI0N2RiOTU0NmE3ZTkyOGVkZGQlMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY2FtcGFpZ24lM2RCaW5nJTI1MjBTdGFuZGFyZCUyNTIwU2hvcHBpbmclMjUyMFBMQSUyNTIwLSUyNTIwTWFoYXJhc2h0cmElMjZ1dG1fdGVybSUzZDQ1ODgyNjIwMjU3MzgyOTclMjZ1dG1fY29udGVudCUzZEFsbCUyNTIwUHJvZHVjdHMlMjUyMC0lMjUyME1haA&rlid=49a725d2c7511247db9546a7e928eddd'
+                        image: 'data:image/svg+xml;charset=utf8,%3Csvg xmlns=''http://www.w3.org/2000/svg'' width=''74'' height=''150''/%3E'
+                    results:
+                      - title: iPhone 14 and iPhone 14 Plus - Apple (IN)Explore further
+                        description: 'iPhone 14 has the same super-speedy chip that’s in iPhone 13 Pro. A15 Bionic, with a 5‑core …'
+                        realPosition: 2
+                        link: 'https://www.apple.com/in/iphone-14/'
+                      - title: Buy iPhone 14 and iPhone 14 Plus - Apple (IN)
+                        description: iPhone 14 A total powerhouse. From ₹79900.00‡ 16.95 cm or 15.40 cm (6.7” or 6.1”) Super …
+                        realPosition: 3
+                        link: 'https://www.apple.com/in/shop/buy-iphone/iphone-14'
+                      - title: iPhone 14 and iPhone 14 Plus - Apple
+                        description: 'The TrueDepth camera and A15 Bionic also power Face ID, the most secure facial …'
+                        realPosition: 4
+                        link: 'https://www.apple.com/iphone-14/'
+                      - title: iPhone 14 Pro and iPhone 14 Pro Max - Apple (IN)
+                        description: iPhone 14 Pro and iPhone 14 Pro Max Watch the film Watch the event Deep Purple Gold …
+                        realPosition: 5
+                        link: 'https://www.apple.com/in/iphone-14-pro/'
+                      - title: 'Apple iPhone 14 128GB Midnight : Amazon.in'
+                        description: Apple iPhone 14 128GB Midnight Visit the Apple Store 120 ratings | 36 answered questions …
+                        realPosition: 6
+                        link: 'https://www.amazon.in/Apple-iPhone-14-128GB-Midnight/dp/B0BDHX8Z63'
+                      - title: Apple iPhone 14 - Full phone specifications
+                        description: "07/09/2022\_· Apple iPhone 14 Released 2022, September 16 172g, 7.8mm thickness iOS 16, …"
+                        realPosition: 7
+                        link: 'https://www.gsmarena.com/apple_iphone_14-11861.php'
+                      - title: The iPhone 14 Pro’s most flawed feature is about to get …
+                        description: "7 hours ago\_· An iPhone 14 Pro Max (Image credit: Future / Lance Ulanoff) Audio player …"
+                        realPosition: 8
+                        link: 'https://www.techradar.com/news/the-iphone-14-pros-most-flawed-feature-is-about-to-get-better'
+                      - title: Apple iPhone 14 Satellite Connectivity Feature Now …
+                        description: "11 hours ago\_· Cupertino. Apple iPhone 14 series will be the only iPhones to get Satellite …"
+                        realPosition: 9
+                        link: 'https://www.news18.com/news/tech/apple-iphone-14-satellite-connectivity-feature-now-available-in-these-countries-how-it-works-6395209.html'
+                      - title: 'iPhone 14 Pro vs. Pixel 7 Pro, Galaxy S22 Ultra: The …'
+                        description: "13/11/2022\_· The digital crop has noticeably reduced the quality on photos from both phones …"
+                        realPosition: 10
+                        link: 'https://www.cnet.com/tech/mobile/iphone-14-pro-vs-pixel-7-pro-galaxy-s22-ultra-the-night-mode-test/'
+                    location:
+                      htmlLang: en
+                    ts: 1.246995449066162
+                    device_type: null
+              examples:
+                searchQueryBingSearchApi:
+                  value:
+                    ads:
+                      - title: amazon.in - Buy Mobiles at Amazon
+                        displayUrl: 'https://www.amazon.in/Electronics/Home'
+                        targetUrl: 'https://www.bing.com/aclk?ld=e8FOaJplA-TBpfaroy8ts5YzVUCUyhvA6w2BwZ3zE4vsR05AETpWJ1YPGZpEVXMirk3QVAUVfPK4ziS2JKZudsUM6EYPu8ckmUH_ipomfWneMFzPnj_1OE6qWiSwRjNXDn3EQUS2ujWRVVUCk3Fu_kf_a-EkTwURPPiw5sk6Ue_Cfn9BYkcYkLeeE3UAG1EmPXUq0e6g&u=aHR0cHMlM2ElMmYlMmZ3d3cuYW1hem9uLmluJTJmcyUyZiUzZmllJTNkVVRGOCUyNmtleXdvcmRzJTNkaXBob25lJTJiLSUyYjE0JTI2dGFnJTNkbXNuZGVza3N0ZGluLTIxJTI2aW5kZXglM2RhcHMlMjZodmFkaWQlM2Q3NTg2NjQ2NzI0NTcyNyUyNmh2cW10JTNkZSUyNmh2Ym10JTNkYmUlMjZodmRldiUzZGMlMjZyZWYlM2RwZF9zbF8zZWN6YzUwbDFvX2UlMjZ0YWclM2Rtc25kZXNrc3RkaW4tMjElMjZyZWYlM2RwZF9zbF8zZWN6YzUwbDFvX2UlMjZhZGdycGlkJTNkMTIxMzg2MTM0Mjk2NDMyNiUyNmh2YWRpZCUzZDc1ODY2NDY3MjQ1NzI3JTI2aHZuZXR3JTNkbyUyNmh2cW10JTNkZSUyNmh2Ym10JTNkYmUlMjZodmRldiUzZGMlMjZodmxvY2ludCUzZCUyNmh2bG9jcGh5JTNkMTU4NTI3JTI2aHZ0YXJnaWQlM2Rrd2QtNzU4NjY3MjI3MDY5MTQlM2Fsb2MtOTAlMjZoeWRhZGNyJTNk&rlid=a267c5b099ae1f7a3604a6c5b7d76534'
+                        content: 'Explore latest selection of Mobiles, Tablets, Cameras & More. Pay on Delivery.'
+                        position: 1
+                        area: top
+                        realPosition: 1
+                      - title: amazon.in - Buy Mobiles at Amazon
+                        displayUrl: 'https://www.amazon.in/Electronics/Home'
+                        targetUrl: 'https://www.bing.com/aclk?ld=e8FOaJplA-TBpfaroy8ts5YzVUCUyhvA6w2BwZ3zE4vsR05AETpWJ1YPGZpEVXMirk3QVAUVfPK4ziS2JKZudsUM6EYPu8ckmUH_ipomfWneMFzPnj_1OE6qWiSwRjNXDn3EQUS2ujWRVVUCk3Fu_kf_a-EkTwURPPiw5sk6Ue_Cfn9BYkcYkLeeE3UAG1EmPXUq0e6g&u=aHR0cHMlM2ElMmYlMmZ3d3cuYW1hem9uLmluJTJmcyUyZiUzZmllJTNkVVRGOCUyNmtleXdvcmRzJTNkaXBob25lJTJiLSUyYjE0JTI2dGFnJTNkbXNuZGVza3N0ZGluLTIxJTI2aW5kZXglM2RhcHMlMjZodmFkaWQlM2Q3NTg2NjQ2NzI0NTcyNyUyNmh2cW10JTNkZSUyNmh2Ym10JTNkYmUlMjZodmRldiUzZGMlMjZyZWYlM2RwZF9zbF8zZWN6YzUwbDFvX2UlMjZ0YWclM2Rtc25kZXNrc3RkaW4tMjElMjZyZWYlM2RwZF9zbF8zZWN6YzUwbDFvX2UlMjZhZGdycGlkJTNkMTIxMzg2MTM0Mjk2NDMyNiUyNmh2YWRpZCUzZDc1ODY2NDY3MjQ1NzI3JTI2aHZuZXR3JTNkbyUyNmh2cW10JTNkZSUyNmh2Ym10JTNkYmUlMjZodmRldiUzZGMlMjZodmxvY2ludCUzZCUyNmh2bG9jcGh5JTNkMTU4NTI3JTI2aHZ0YXJnaWQlM2Rrd2QtNzU4NjY3MjI3MDY5MTQlM2Fsb2MtOTAlMjZoeWRhZGNyJTNk&rlid=a267c5b099ae1f7a3604a6c5b7d76534'
+                        content: 'Explore latest selection of Mobiles, Tablets, Cameras & More. Pay on Delivery.'
+                        position: 2
+                        area: bottom
+                        realPosition: 11
+                    adsCount: 2
+                    shoppingAds:
+                      - title: 'Apple iPhone 13 (128 GB, …Green)'
+                        price: '₹ 66,990.00'
+                        originalPrice: null
+                        advertiser: Vijay Sales
+                        targetUrl: 'https://www.bing.com/aclk?ld=e8cIwnIRQB4-g-1SU-XBAc3jVUCUwFr_e2cllI4nA41MA8GH5RjB9ZkEnequmlyMuaPmTGHODyefd9V2hnE3hfqh0BV4kqemuEaG9KKAbuN4ZlFGpOJXlgqQE2fn9g0zbdN4pbYdDq_aT0lhYMrGLZYZ0B7TK3Ft7-F6kUBavj_m8UOjVKvhY6EFRVoWW3W-x-LXPXVw&u=aHR0cHMlM2ElMmYlMmZ3d3cudmlqYXlzYWxlcy5jb20lMmZhcHBsZS1pcGhvbmUtMTMtMTI4LWdiLWdyZWVuJTJmMTk0OTMlM2Ztc2Nsa2lkJTNkYThjZjdkYjNjZWNhMTkzMDA0ZDAxZWM2ZTBiMzRhMTUlMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY2FtcGFpZ24lM2RCaW5nJTI1MjBTdGFuZGFyZCUyNTIwU2hvcHBpbmclMjUyMFBMQSUyNTIwLSUyNTIwTWFoYXJhc2h0cmElMjZ1dG1fdGVybSUzZDQ1ODgyNjIwMjU3MzgyOTclMjZ1dG1fY29udGVudCUzZEFsbCUyNTIwUHJvZHVjdHMlMjUyMC0lMjUyME1haA&rlid=a8cf7db3ceca193004d01ec6e0b34a15'
+                        image: 'data:image/svg+xml;charset=utf8,%3Csvg xmlns=''http://www.w3.org/2000/svg'' width=''110'' height=''150''/%3E'
+                      - title: 'Apple iPhone 14 Pro Max …(1 TB, Space Black)'
+                        price: '₹ 1,89,900.00'
+                        originalPrice: null
+                        advertiser: Vijay Sales
+                        targetUrl: 'https://www.bing.com/aclk?ld=e8vwKKCDTJwrjxO6J_FyVZKjVUCUyDaVI3GU_cdwYygdX1vd8iBBofLJnJnnQuv6phjVdV-bKZXOzF9LhA80dsraDWCjbeHbFtLSf6gxtxZPwFTPb-ayJLLjLxDfq5zcmkpJk3lPFqflpJrVaJHML4Ws8gvBFX_ob151TNKE0vChcXpKV2SH4y2My-msG4kxDprTHzLg&u=aHR0cHMlM2ElMmYlMmZ3d3cudmlqYXlzYWxlcy5jb20lMmZhcHBsZS1pcGhvbmUtMTQtcHJvLW1heC0xLXRiLXNwYWNlLWJsYWNrJTJmMjIwNzIlM2Ztc2Nsa2lkJTNkZDgzZmQxYTczYTc3MWRiMjY4OWJiMmQyMTQwZTBjNDElMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY2FtcGFpZ24lM2RCaW5nJTI1MjBTdGFuZGFyZCUyNTIwU2hvcHBpbmclMjUyMFBMQSUyNTIwLSUyNTIwTWFoYXJhc2h0cmElMjZ1dG1fdGVybSUzZDQ1ODgyNjIwMjU3MzgyOTclMjZ1dG1fY29udGVudCUzZEFsbCUyNTIwUHJvZHVjdHMlMjUyMC0lMjUyME1haA&rlid=d83fd1a73a771db2689bb2d2140e0c41'
+                        image: 'data:image/svg+xml;charset=utf8,%3Csvg xmlns=''http://www.w3.org/2000/svg'' width=''120'' height=''150''/%3E'
+                      - title: 'Apple iPhone 14 Pro Max …(1 TB, Gold)'
+                        price: '₹ 1,89,900.00'
+                        originalPrice: null
+                        advertiser: Vijay Sales
+                        targetUrl: 'https://www.bing.com/aclk?ld=e8mzzBu-io4LcoX4GgYoGbazVUCUzHcRcP8oLN7lazWlP_eaRhPbU-qjaVDTxhI4m7KunRAY0TKHq37Ebp21wxgALNjvvjHb6mGXPj5ooLnHzjsV4tSL6456rVqyerJjOUykuXEglS4RUC0UraCnMi93AXd9lPgD2v5qKLHg2cOHj9sFT1K4YiQmSjTb8GzNhhQDiWCA&u=aHR0cHMlM2ElMmYlMmZ3d3cudmlqYXlzYWxlcy5jb20lMmZhcHBsZS1pcGhvbmUtMTQtcHJvLW1heC0xLXRiLWdvbGQlMmYyMjA4MyUzZm1zY2xraWQlM2QwNGQ1NjUyMDYzMGYxNzg5ODAzMTA2NTU0ZDc2MWJlYSUyNnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX21lZGl1bSUzZGNwYyUyNnV0bV9jYW1wYWlnbiUzZEJpbmclMjUyMFN0YW5kYXJkJTI1MjBTaG9wcGluZyUyNTIwUExBJTI1MjAtJTI1MjBNYWhhcmFzaHRyYSUyNnV0bV90ZXJtJTNkNDU4ODI2MjAyNTczODI5NyUyNnV0bV9jb250ZW50JTNkQWxsJTI1MjBQcm9kdWN0cyUyNTIwLSUyNTIwTWFo&rlid=04d56520630f1789803106554d761bea'
+                        image: 'data:image/svg+xml;charset=utf8,%3Csvg xmlns=''http://www.w3.org/2000/svg'' width=''120'' height=''150''/%3E'
+                      - title: 'Apple iPhone 12 (128 GB, …Purple)'
+                        price: '₹ 62,990.00'
+                        originalPrice: null
+                        advertiser: Vijay Sales
+                        targetUrl: 'https://www.bing.com/aclk?ld=e8KrsgU0eHzsK1tKOo62L42DVUCUzCuhV7aqiZWaNLjR7h5-Bg037AKQJ-Pfd0MvPEzdMCVvS20lvJf_waV3-xXNJ9xqHpiYJlFNhbx5kLC9yYzH0QbxpfheRar7_-IGhAFDirVFc8UkS-7Wj62bcbXCmXKUaLsEw35tjctsTvNkJFBETh1E5kj7b5pXkXzidXAuYT5A&u=aHR0cHMlM2ElMmYlMmZ3d3cudmlqYXlzYWxlcy5jb20lMmZhcHBsZS1pcGhvbmUtMTItMTI4LWdiLXB1cnBsZSUyZjE2NTE3JTNmbXNjbGtpZCUzZDBiZTBlOWIwOTZhYzE4YWJiMGJiOGFjNWI4ZDU4ZDE4JTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkQmluZyUyNTIwU3RhbmRhcmQlMjUyMFNob3BwaW5nJTI1MjBQTEElMjUyMC0lMjUyME1haGFyYXNodHJhJTI2dXRtX3Rlcm0lM2Q0NTg4MjYyMDI1NzM4Mjk3JTI2dXRtX2NvbnRlbnQlM2RBbGwlMjUyMFByb2R1Y3RzJTI1MjAtJTI1MjBNYWg&rlid=0be0e9b096ac18abb0bb8ac5b8d58d18'
+                        image: 'data:image/svg+xml;charset=utf8,%3Csvg xmlns=''http://www.w3.org/2000/svg'' width=''110'' height=''150''/%3E'
+                      - title: 'Apple iPhone 12 (128 GB, …Green)'
+                        price: '₹ 62,990.00'
+                        originalPrice: null
+                        advertiser: Vijay Sales
+                        targetUrl: 'https://www.bing.com/aclk?ld=e8KSJALaFxWUlefRA5kHYZ2zVUCUzeEfdmFRANhUz-DsoCZnRozDQTq4l2AESEH131c-cIKprZF_1k6sXP2IA9_nLbx1BSyNuHzCHnNXM3YJP9TK7CIfOSuUIATJfshG_9h-vsRZ4qPsBVuS2b_gnz0TfEdyo9ThRWekUt9eE0VenpOjVNCVD-W16POQXb6U9pr-DDdA&u=aHR0cHMlM2ElMmYlMmZ3d3cudmlqYXlzYWxlcy5jb20lMmZhcHBsZS1pcGhvbmUtMTItMTI4LWdiLWdyZWVuJTJmMTQ2ODUlM2Ztc2Nsa2lkJTNkNmFmMzNjNTgyZDViMWJkMGY3MDU1ZjJkMDMyMjBkNWMlMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY2FtcGFpZ24lM2RCaW5nJTI1MjBTdGFuZGFyZCUyNTIwU2hvcHBpbmclMjUyMFBMQSUyNTIwLSUyNTIwTWFoYXJhc2h0cmElMjZ1dG1fdGVybSUzZDQ1ODgyNjIwMjU3MzgyOTclMjZ1dG1fY29udGVudCUzZEFsbCUyNTIwUHJvZHVjdHMlMjUyMC0lMjUyME1haA&rlid=6af33c582d5b1bd0f7055f2d03220d5c'
+                        image: 'data:image/svg+xml;charset=utf8,%3Csvg xmlns=''http://www.w3.org/2000/svg'' width=''74'' height=''150''/%3E'
+                      - title: 'Apple iPhone 12 (128 GB, …Black)'
+                        price: '₹ 62,990.00'
+                        originalPrice: null
+                        advertiser: Vijay Sales
+                        targetUrl: 'https://www.bing.com/aclk?ld=e81V2BEBJlcNVW5YLn1ky3ejVUCUwY4PCEC5b3UbJaYM2XmXfP7WV4nQUnjHZ4tYCXi8sjvH2_EnliQYZ2yKHb7M1LAtWAqNoagR_NIcMjKlrHkEXQ8o_2ObaESYsxW5RoGdHPZ0n5w7WQSAZ5MIqJYd159D6k_1trp1ZJuKebg3EoN8bS2nW5QyOok3K-etsw8U_c4g&u=aHR0cHMlM2ElMmYlMmZ3d3cudmlqYXlzYWxlcy5jb20lMmZhcHBsZS1pcGhvbmUtMTItMTI4LWdiLWJsYWNrJTJmMTQ2ODElM2Ztc2Nsa2lkJTNkNDlhNzI1ZDJjNzUxMTI0N2RiOTU0NmE3ZTkyOGVkZGQlMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY2FtcGFpZ24lM2RCaW5nJTI1MjBTdGFuZGFyZCUyNTIwU2hvcHBpbmclMjUyMFBMQSUyNTIwLSUyNTIwTWFoYXJhc2h0cmElMjZ1dG1fdGVybSUzZDQ1ODgyNjIwMjU3MzgyOTclMjZ1dG1fY29udGVudCUzZEFsbCUyNTIwUHJvZHVjdHMlMjUyMC0lMjUyME1haA&rlid=49a725d2c7511247db9546a7e928eddd'
+                        image: 'data:image/svg+xml;charset=utf8,%3Csvg xmlns=''http://www.w3.org/2000/svg'' width=''74'' height=''150''/%3E'
+                    results:
+                      - title: iPhone 14 and iPhone 14 Plus - Apple (IN)Explore further
+                        description: 'iPhone 14 has the same super-speedy chip that’s in iPhone 13 Pro. A15 Bionic, with a 5‑core …'
+                        realPosition: 2
+                        link: 'https://www.apple.com/in/iphone-14/'
+                      - title: Buy iPhone 14 and iPhone 14 Plus - Apple (IN)
+                        description: iPhone 14 A total powerhouse. From ₹79900.00‡ 16.95 cm or 15.40 cm (6.7” or 6.1”) Super …
+                        realPosition: 3
+                        link: 'https://www.apple.com/in/shop/buy-iphone/iphone-14'
+                      - title: iPhone 14 and iPhone 14 Plus - Apple
+                        description: 'The TrueDepth camera and A15 Bionic also power Face ID, the most secure facial …'
+                        realPosition: 4
+                        link: 'https://www.apple.com/iphone-14/'
+                      - title: iPhone 14 Pro and iPhone 14 Pro Max - Apple (IN)
+                        description: iPhone 14 Pro and iPhone 14 Pro Max Watch the film Watch the event Deep Purple Gold …
+                        realPosition: 5
+                        link: 'https://www.apple.com/in/iphone-14-pro/'
+                      - title: 'Apple iPhone 14 128GB Midnight : Amazon.in'
+                        description: Apple iPhone 14 128GB Midnight Visit the Apple Store 120 ratings | 36 answered questions …
+                        realPosition: 6
+                        link: 'https://www.amazon.in/Apple-iPhone-14-128GB-Midnight/dp/B0BDHX8Z63'
+                      - title: Apple iPhone 14 - Full phone specifications
+                        description: "07/09/2022\_· Apple iPhone 14 Released 2022, September 16 172g, 7.8mm thickness iOS 16, …"
+                        realPosition: 7
+                        link: 'https://www.gsmarena.com/apple_iphone_14-11861.php'
+                      - title: The iPhone 14 Pro’s most flawed feature is about to get …
+                        description: "7 hours ago\_· An iPhone 14 Pro Max (Image credit: Future / Lance Ulanoff) Audio player …"
+                        realPosition: 8
+                        link: 'https://www.techradar.com/news/the-iphone-14-pros-most-flawed-feature-is-about-to-get-better'
+                      - title: Apple iPhone 14 Satellite Connectivity Feature Now …
+                        description: "11 hours ago\_· Cupertino. Apple iPhone 14 series will be the only iPhones to get Satellite …"
+                        realPosition: 9
+                        link: 'https://www.news18.com/news/tech/apple-iphone-14-satellite-connectivity-feature-now-available-in-these-countries-how-it-works-6395209.html'
+                      - title: 'iPhone 14 Pro vs. Pixel 7 Pro, Galaxy S22 Ultra: The …'
+                        description: "13/11/2022\_· The digital crop has noticeably reduced the quality on photos from both phones …"
+                        realPosition: 10
+                        link: 'https://www.cnet.com/tech/mobile/iphone-14-pro-vs-pixel-7-pro-galaxy-s22-ultra-the-night-mode-test/'
+                    location:
+                      htmlLang: en
+                    ts: 1.246995449066162
+                    device_type: null
+                searchBingForInstagram:
+                  value:
+                    ads: []
+                    adsCount: 0
+                    shoppingAds: []
+                    results:
+                      - title: Instagram
+                        description: 'Create an account or log in to Instagram - A simple, fun & creative way to capture, edit & share photos, videos & messages with friends & family.'
+                        realPosition: 1
+                        link: 'https://www.instagram.com/'
+                      - title: Sign up • Instagram
+                        description: 'Join Instagram! Sign up to see photos, videos, stories & messages from your friends, family & interests around the world.'
+                        realPosition: 2
+                        link: 'https://www.instagram.com/accounts/emailsignup/'
+                      - title: Instagram (@instagram) • Instagram photos and videos
+                        description: '566m Followers, 150 Following, 7,281 Posts - See Instagram photos and videos from Instagram (@instagram)'
+                        realPosition: 3
+                        link: 'https://www.instagram.com/instagram/'
+                      - title: Get Instagram from the Microsoft Store
+                        description: 'Description. Bringing you closer to the people and things you love. – Instagram from Meta. Connect with friends, share what you''re up to or see what''s new from others all over the world. …'
+                        realPosition: 4
+                        link: 'https://apps.microsoft.com/store/detail/instagram/9NBLGGH5L9XT'
+                      - title: 'Instagram - Capture, Create & Share What You Love'
+                        description: 'Instagram makes it easy to capture, create and share what you love. Discover more about Instagram''s features and commitment to community, safety and well-being. Log in'
+                        realPosition: 5
+                        link: 'https://about.instagram.com/'
+                      - title: App Store - Apple
+                        description: App Store - Apple
+                        realPosition: 6
+                        link: 'https://apps.apple.com/us/app/instagram/id389801252'
+                      - title: 'Explore News, Careers & More | About Instagram'
+                        description: 'Make the most of your Instagram experience by discovering new feature updates, tips, and tools to engage with your audience and learning about our resources. Log in We bring you closer to …'
+                        realPosition: 7
+                        link: 'https://about.instagram.com/about-us/'
+                      - title: Instagram - Wikipedia
+                        description: 'Instagram. Instagram [a] is a photo and video sharing social networking service owned by American company Meta Platforms. The app allows users to upload media that can be edited …'
+                        realPosition: 8
+                        link: 'https://en.wikipedia.org/wiki/Instagram'
+                    location:
+                      htmlLang: en
+                    ts: 3.6753673553466797
+                    device_type: null
+                example-1:
+                  value:
+                    ads:
+                      - title: string
+                        displayUrl: string
+                        targetUrl: string
+                        content: string
+                        position: 0
+                        area: string
+                        realPosition: 0
+                    adsCount: 0
+                    shoppingAds:
+                      - title: string
+                        price: string
+                        originalPrice: null
+                        advertiser: string
+                        targetUrl: string
+                        image: string
+                    results:
+                      - title: string
+                        description: string
+                        realPosition: 0
+                        link: string
+                    location:
+                      htmlLang: string
+                    ts: 0
+                    device_type: null
+        '404':
+          description: Not Found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '429':
+          description: Rate limit exceeded
+      x-internal: false
+      tags:
+        - v1
+    parameters:
+      - name: query
+        in: path
+        schema:
+          title: Query
+          type: string
+        description: 'A url encoded query string, for reference checkout https://moz.com/blog/the-ultimate-guide-to-the-google-search-parameters'
+        required: true
+        examples:
+          simpleBingSearch:
+            value: q=search+api
+            description: a simple bing search for "search api"
+          simpleBingSearchInstagram:
+            value: q=instagra
+            description: a simple bing "instagram"
+      - name: X-User-Agent
+        in: header
+        required: false
+        schema:
+          title: X-User-Agent
+          type: string
+          enum:
+            - desktop
+            - mobile
+        description: Optional header to specify device type "desktop" or "mobile". Defaults to "desktop"
+      - name: X-Proxy-Location
+        in: header
+        required: false
+        schema:
+          title: X-Proxy-Location
+          type: string
+          enum:
+            - EU
+            - CA
+            - US
+            - IE
+            - GB
+            - FR
+            - DE
+            - SE
+            - IN
+            - JP
+            - KR
+            - SG
+            - AU
+            - BR
+        description: 'Specify the proxy location for the search.  Supported countries. ''US'', ''CA'', ''IE'', ''GB'', ''FR'', ''DE'', ''SE'', ''IN'', ''JP'', ''KR'', ''SG'', ''AU'', ''BR'''
   '/v1/video/{query}':
     get:
       summary: Video
@@ -6579,7 +6954,7 @@ paths:
       - $ref: '#/components/parameters/XUserAgent'
       - $ref: '#/components/parameters/XProxyLocation'
     x-internal: false
-  '/v1/images/{query}':
+  '/v1/image/{query}':
     get:
       summary: Images
       description: |-
@@ -7057,8 +7432,38 @@ paths:
           imageTesla:
             value: q=tesla
             description: Perform an image search for "tesla"
-      - $ref: '#/components/parameters/XUserAgent'
-      - $ref: '#/components/parameters/XProxyLocation'
+      - name: X-User-Agent
+        in: header
+        required: false
+        schema:
+          title: X-User-Agent
+          type: string
+          enum:
+            - desktop
+            - mobile
+        description: Optional header to specify device type "desktop" or "mobile". Defaults to "desktop"
+      - name: X-Proxy-Location
+        in: header
+        required: false
+        schema:
+          title: X-Proxy-Location
+          type: string
+          enum:
+            - EU
+            - CA
+            - US
+            - IE
+            - GB
+            - FR
+            - DE
+            - SE
+            - IN
+            - JP
+            - KR
+            - SG
+            - AU
+            - BR
+        description: 'Specify the proxy location for the search.  Supported countries. ''US'', ''CA'', ''IE'', ''GB'', ''FR'', ''DE'', ''SE'', ''IN'', ''JP'', ''KR'', ''SG'', ''AU'', ''BR'''
   '/v1/crawl/{query}':
     get:
       summary: Crawl
