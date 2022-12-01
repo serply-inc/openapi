@@ -33,15 +33,15 @@ info:
 
     | Security Schema Type | Header Name | Example Token |
     | --- | --- | --- |
-    | API Key | `X-RapidAPI-Key` | 2505adfbfbmshd20dee55ce912f8p17bd |
+    | API Key | `X-Api-Key` | 2505adfbfbmshd20dee55ce912f8p17bd |
 
-    In the following example, `X-RapidAPI-Key` represents the auth token for your account.
+    In the following example, `X-Api-Key` represents the auth token for your account.
 
     ```
-    curl --header 'X-RapidAPI-Key: YOU_APIKEY'
+    curl --header 'X-Api-Key: YOU_APIKEY'
     ```
 
-    You can view and manage your API keys in the [Dashboard](https://rapidapi.com/developer/dashboard).
+    You can view and manage your API keys in the [Dashboard](https://app.serply.io/users/sign_in).
 
     Be sure to keep your API keys secure. Do not share them in publicly accessible areas such as GitHub, client-side code, and so forth.
 
