@@ -10172,30 +10172,11 @@
         }
       ]
     },
-    "/v1/serp": {
-      "post": {
+    "/v1/serp/{query}": {
+      "get": {
         "summary": "SERP",
-        "description": "Perform Google Search and search for website in Search Engine Results Pages (SERP)\n\nParameters\n----------\nquery : the string query to perform search. supports advance queries. Check out https://moz.com/blog/the-ultimate-guide-to-the-google-search-parameters guide for formatting, it is recommended to set the query `&num=100`\n\nReturns\n-------\njson: a list of results with the query, website, searched_results, and position. json[\"position\"] will be set to -1 if website is not found in results",
+        "description": "Perform Google Search and search for website in Search Engine Results Pages (SERP)\n\nParameters\n----------\nquery : the string query to perform search. supports advance queries. Check out https://moz.com/blog/the-ultimate-guide-to-the-google-search-parameters guide for formatting, it is recommended to set the query `&num=100` additional domain/wesite: Required params `domain` or `website`. When using website please ensure that the website is url encoded\n\nReturns\n-------\njson: a list of results with the query, website, searched_results, and position. json[\"position\"] will be set to -1 if website is not found in results",
         "operationId": "SERP",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SerpData"
-              },
-              "examples": {
-                "rapidapiSerp": {
-                  "summary": "example of getting rapidapi SERP for keywords \"google search api\"",
-                  "value": {
-                    "query": "q=google+search+api",
-                    "website": "serply.io"
-                  }
-                }
-              }
-            }
-          },
-          "required": true
-        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -10273,7 +10254,68 @@
         "tags": [
           "v1"
         ]
-      }
+      },
+      "parameters": [
+        {
+          "required": true,
+          "schema": {
+            "title": "Query",
+            "type": "string"
+          },
+          "name": "query",
+          "in": "path",
+          "examples": {
+            "serplyRankForSERPAPIWithDomain": {
+              "value": "q=serp+api&num=100&domain=serply.io",
+              "description": "Perform an Serply.io SERP for \"tesla\""
+            },
+            "serplyRankForSERPAPIWithWebsite": {
+              "value": "q=serp+api&num=100&website=https%3A%2F%2Fserply.io",
+              "description": "Perform an Serply.io SERP for \"tesla\""
+            }
+          }
+        },
+        {
+          "name": "X-User-Agent",
+          "in": "header",
+          "required": false,
+          "schema": {
+            "title": "X-User-Agent",
+            "type": "string",
+            "enum": [
+              "desktop",
+              "mobile"
+            ]
+          },
+          "description": "Optional header to specify device type \"desktop\" or \"mobile\". Defaults to \"desktop\""
+        },
+        {
+          "name": "X-Proxy-Location",
+          "in": "header",
+          "required": false,
+          "schema": {
+            "title": "X-Proxy-Location",
+            "type": "string",
+            "enum": [
+              "EU",
+              "CA",
+              "US",
+              "IE",
+              "GB",
+              "FR",
+              "DE",
+              "SE",
+              "IN",
+              "JP",
+              "KR",
+              "SG",
+              "AU",
+              "BR"
+            ]
+          },
+          "description": "Specify the proxy location for the search.  Supported countries. 'US', 'CA', 'IE', 'GB', 'FR', 'DE', 'SE', 'IN', 'JP', 'KR', 'SG', 'AU', 'BR'"
+        }
+      ]
     },
     "/v1/crawl/{query}": {
       "get": {
