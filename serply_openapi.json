@@ -1846,7 +1846,7 @@
     },
     "/v1/job/search/{query}": {
       "get": {
-        "summary": "Search Jobs",
+        "summary": "Jobs",
         "description": "Perform Job Search\nCurrently only supports jobs in North America\n\nParameters\n----------\nquery :Position Title and Location (optional). The query should be url encoded\n\nReturns\n-------\njson: a list of jobs with their link to apply, description, and title for each job opportunity",
         "operationId": "Search Job",
         "responses": {
@@ -3007,21 +3007,15 @@
           "description": "A url encoded query string, for reference checkout https://moz.com/blog/the-ultimate-guide-to-the-google-search-parameters",
           "required": true,
           "examples": {
-            "simpleSearch": {
-              "value": "q=search+api",
-              "description": "a simple search for \"search api\""
+            "Nurse Practitioner Job Search": {
+              "value": "q=nurse+practitioner",
+              "description": "Search for \"nurse practitioner\" jobs"
             },
-            "advance100Results": {
-              "value": "q=search+api&num=100",
-              "description": "a more advance search with 100 results"
+            "Data Analyst Job Search": {
+              "value": "q=data+analyst+work+from+home",
+              "description": "Search for remote \"data analyst\" jobs"
             }
           }
-        },
-        {
-          "$ref": "#/components/parameters/XUserAgent"
-        },
-        {
-          "$ref": "#/components/parameters/XProxyLocation"
         }
       ]
     },

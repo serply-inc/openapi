@@ -1265,7 +1265,7 @@ paths:
       - $ref: '#/components/parameters/XProxyLocation'
   '/v1/job/search/{query}':
     get:
-      summary: Search Jobs
+      summary: Jobs
       description: |-
         Perform Job Search
         Currently only supports jobs in North America
@@ -3540,14 +3540,12 @@ paths:
         description: 'A url encoded query string, for reference checkout https://moz.com/blog/the-ultimate-guide-to-the-google-search-parameters'
         required: true
         examples:
-          simpleSearch:
-            value: q=search+api
-            description: a simple search for "search api"
-          advance100Results:
-            value: q=search+api&num=100
-            description: a more advance search with 100 results
-      - $ref: '#/components/parameters/XUserAgent'
-      - $ref: '#/components/parameters/XProxyLocation'
+          Nurse Practitioner Job Search:
+            value: q=nurse+practitioner
+            description: Search for "nurse practitioner" jobs
+          Data Analyst Job Search:
+            value: q=data+analyst+work+from+home
+            description: Search for remote "data analyst" jobs
   '/v1/scholar/{query}':
     get:
       summary: Scholar
