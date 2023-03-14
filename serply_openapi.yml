@@ -90,7 +90,7 @@ paths:
         Returns
         -------
         json: a list of results with the link, description, and title for each result
-      operationId: Search Google
+      operationId: v1/search
       responses:
         '200':
           description: Successful Response
@@ -481,7 +481,7 @@ paths:
         Returns
         -------
         json: a list of results with the link, description, and title for each result
-      operationId: Search Bing
+      operationId: v1/b/search
       responses:
         '200':
           description: Successful Response
@@ -875,7 +875,7 @@ paths:
   '/v1/video/{query}':
     get:
       summary: Video
-      operationId: Video
+      operationId: v1/video
       description: |-
         Perform Video Search
 
@@ -1277,7 +1277,7 @@ paths:
         Returns
         -------
         json: a list of jobs with their link to apply, description, and title for each job opportunity
-      operationId: Search Job
+      operationId: v1/job/search
       responses:
         '200':
           description: Successful Response
@@ -3549,7 +3549,7 @@ paths:
   '/v1/scholar/{query}':
     get:
       summary: Scholar
-      operationId: Scholar
+      operationId: v1/scholar
       description: |-
         Perform Scholar Search
 
@@ -9213,7 +9213,7 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
         '429':
           description: Rate limit exceeded
-      operationId: News
+      operationId: v1/news
       description: |-
         Perform Google News Search
 
@@ -9252,7 +9252,7 @@ paths:
         Returns
         -------
         json: a list of results with the link, description, title, and image thumbnail for each result
-      operationId: Images
+      operationId: v1/image
       responses:
         '200':
           description: Successful Response
@@ -9762,7 +9762,7 @@ paths:
         Returns
         -------
         json: a list of results with the query, website, searched_results, and position. json["position"] will be set to -1 if website is not found in results
-      operationId: SERP
+      operationId: v1/serp
       responses:
         '200':
           description: Successful Response
@@ -9867,7 +9867,7 @@ paths:
         Returns
         -------
         json: a the html source of the results page
-      operationId: Crawl
+      operationId: v1/crawl
       responses:
         '200':
           description: Successful Response
@@ -9928,7 +9928,7 @@ paths:
         Returns
         -------
         json: a the html source of the results page
-      operationId: Search Amazon
+      operationId: v1/product/search
       responses:
         '200':
           description: Successful Response
