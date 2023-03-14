@@ -16,7 +16,7 @@
       "get": {
         "summary": "Search Google",
         "description": "Perform Google Search\n\nParameters\n----------\nquery : A url encoded query string, for reference checkout https://moz.com/blog/the-ultimate-guide-to-the-google-search-parameters\n\nReturns\n-------\njson: a list of results with the link, description, and title for each result",
-        "operationId": "Search Google",
+        "operationId": "v1/search",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -647,7 +647,7 @@
       "get": {
         "summary": "Search Bing",
         "description": "Perform Bing Search\n\nParameters\n----------\nquery : A url encoded query string, for reference checkout https://seosly.com/blog/bing-search-operators/\n\nReturns\n-------\njson: a list of results with the link, description, and title for each result",
-        "operationId": "Search Bing",
+        "operationId": "v1/b/search",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -1216,7 +1216,7 @@
     "/v1/video/{query}": {
       "get": {
         "summary": "Video",
-        "operationId": "Video",
+        "operationId": "v1/video",
         "description": "Perform Video Search\n\nParameters\n----------\nquery : A url encoded query string, for reference checkout https://moz.com/blog/the-ultimate-guide-to-the-google-search-parameters\n\nReturns\n-------\njson: a list of results with the link, description, and title for each result",
         "responses": {
           "200": {
@@ -1848,7 +1848,7 @@
       "get": {
         "summary": "Jobs",
         "description": "Perform Job Search\nCurrently only supports jobs in North America\n\nParameters\n----------\nquery :Position Title and Location (optional). The query should be url encoded\n\nReturns\n-------\njson: a list of jobs with their link to apply, description, and title for each job opportunity",
-        "operationId": "Search Job",
+        "operationId": "v1/job/search",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -3022,7 +3022,7 @@
     "/v1/scholar/{query}": {
       "get": {
         "summary": "Scholar",
-        "operationId": "Scholar",
+        "operationId": "v1/scholar",
         "description": "Perform Scholar Search\n\nParameters\n----------\nquery : A url encoded query string, for reference checkout https://moz.com/blog/the-ultimate-guide-to-the-google-search-parameters\n\nReturns\n-------\njson: a list of results with the link, description, and title for each result",
         "responses": {
           "200": {
@@ -10541,7 +10541,7 @@
             "description": "Rate limit exceeded"
           }
         },
-        "operationId": "News",
+        "operationId": "v1/news",
         "description": "Perform Google News Search\n\n Parameters\n----------\nquery : the string query to perform search for Google news. A simple query for `president` will be `q=president`. An example of multiple keyword would be `q=news+about+presdient+trump`. News can also be filtered by country and language. For `US` news and in English the query will be `q=trump&ceid=US:en` for news in Great Britian the query will be `q=trump&ceid=GB:en`\n\nReturns\n-------\njson: {\"feed\": { \"title\" : \"trump\" ...} , \"entites\": [ {\"title\" : \"Trump doubles down on divisive messaging in speech to honor Independence Day - CNN\", \"links\": []} ...]}",
         "tags": [
           "v1"
@@ -10575,7 +10575,7 @@
       "get": {
         "summary": "Images",
         "description": "Perform Google Image Search\n\nParameters\n----------\nquery : the string query to perform search. supports advance queries.\n\nReturns\n-------\njson: a list of results with the link, description, title, and image thumbnail for each result",
-        "operationId": "Images",
+        "operationId": "v1/image",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -11351,7 +11351,7 @@
       "get": {
         "summary": "SERP",
         "description": "Perform Google Search and search for website in Search Engine Results Pages (SERP)\n\nParameters\n----------\nquery : the string query to perform search. supports advance queries. Check out https://moz.com/blog/the-ultimate-guide-to-the-google-search-parameters guide for formatting, it is recommended to set the query `&num=100` additional domain/wesite: Required params `domain` or `website`. When using website please ensure that the website is url encoded\n\nReturns\n-------\njson: a list of results with the query, website, searched_results, and position. json[\"position\"] will be set to -1 if website is not found in results",
-        "operationId": "SERP",
+        "operationId": "v1/serp",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -11496,7 +11496,7 @@
       "get": {
         "summary": "Crawl",
         "description": "Perform Google Search\n\n Parameters\n----------\nquery : the string query to perform search. supports advance queries. Check out https://moz.com/blog/the-ultimate-guide-to-the-google-search-parameters guide for formating\n\nReturns\n-------\njson: a the html source of the results page",
-        "operationId": "Crawl",
+        "operationId": "v1/crawl",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -11581,7 +11581,7 @@
       "get": {
         "summary": "Product",
         "description": "Perform Amazon Product Search\n\n Parameters\n----------\nquery : the string query to perform search\n\nReturns\n-------\njson: a the html source of the results page",
-        "operationId": "Search Amazon",
+        "operationId": "v1/product/search",
         "responses": {
           "200": {
             "description": "Successful Response",
