@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   title: Serply API Specs
   description: |
-    # Introductio
+    # Introduction
 
     An API to perform web searches and gather market data. Get Fast and accurate real time data.
 
